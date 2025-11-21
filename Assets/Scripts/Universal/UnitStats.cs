@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 
 public class UnitStats : MonoBehaviour
 {
@@ -49,12 +51,12 @@ public class UnitStats : MonoBehaviour
 
         if (healthText != null)
         {
-            healthText.text = $"HP: {health}";
+            healthText.text = $"{health}";
         }
 
         if (damageText != null)
         {
-            damageText.text = $"DMG: {damage}";
+            damageText.text = $"{damage}";
         }
     }
 
@@ -68,6 +70,17 @@ public class UnitStats : MonoBehaviour
             manager.OnEnemyKilled();
         }
 
-        Destroy(gameObject);
+        if (gameObject.tag == "Player" && health <= 0)
+        {
+            ClearAndResetGame _gameEnd = FindAnyObjectByType<ClearAndResetGame>();
+            _gameEnd.GameOver();
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
+
 }

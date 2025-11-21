@@ -41,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetBool("isMoving", isMoving);
 
         Vector2 movement = new Vector2(xMovement, yMovement).normalized * speedBoost * speedMulriplier;
-        Vector2 newPosition = _rigidbody.position + movement * Time.fixedDeltaTime;
 
         _rigidbody.linearVelocity = movement; // физическое перемещение с учётом столкновений
 

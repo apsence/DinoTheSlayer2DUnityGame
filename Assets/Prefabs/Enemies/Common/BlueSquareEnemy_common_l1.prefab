@@ -109,7 +109,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 4563607936269872363, guid: 52b2234b48f3ebc49a48c3d5804a7f07, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -209,3 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitStats
   damage: 2
   health: 8
+  maxHealth: 100
+  healthBar: {fileID: 0}
+  healthText: {fileID: 0}
+  damageText: {fileID: 0}

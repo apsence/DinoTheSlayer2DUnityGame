@@ -22,6 +22,7 @@ public class OnCollisionProjectile : MonoBehaviour
         if (other.CompareTag(ownerTag)) return;
 
         if (ownerTag == "Enemy" && other.CompareTag("Enemy")) return;
+        if (ownerTag == "Player" && other.CompareTag("Player")) return;
 
         UnitStats stats = other.GetComponent<UnitStats>();
         if (stats != null)

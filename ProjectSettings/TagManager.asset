@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Border
   - Enemy
+  - GameOverImage
+  - GameOverGUI
+  - WinUI
+  - WaveSpeaker
   layers:
   - Default
   - TransparentFX

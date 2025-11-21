@@ -25,7 +25,7 @@ public class CreatepProjectile : MonoBehaviour
                 if (stats != null)
                 {
                     proj.damage = stats.damage;
-                    proj.ownerTag = gameObject.tag;
+                    proj.ownerTag = stats.gameObject.tag;
                 }
             }
 

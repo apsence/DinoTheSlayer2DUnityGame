@@ -1,8 +1,10 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [Header("Менеджер волн")]
     public int currentWave;
     public Wave[] waves;
     public Transform[] spawnPoints;
@@ -10,6 +12,12 @@ public class LevelManager : MonoBehaviour
     [Header("Настройки волн")]
     public float delayBetweenWaves = 5f;
     public float delayBetweenEnemies = 0.1f;
+
+    [Header("Настройки спикера")]
+    public float speakerDelay = 4f;
+
+    private ClearAndResetGame _clearAndResetGame;
+    private TextMeshPro _textSpeaker;
 
     [System.Serializable]
     public class EnemyGroup
@@ -26,7 +34,8 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-
+        _textSpeaker = GameObject.FindWithTag("WaveSpeaker").GetComponent<TextMeshPro>();
+        _clearAndResetGame = FindAnyObjectByType<ClearAndResetGame>();
         currentWave = 0;
         if (waves.Length > 0)
         {
@@ -37,7 +46,7 @@ public class LevelManager : MonoBehaviour
 
     public void OnEnemyKilled()
     {
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && _clearAndResetGame.isGameEnd == false)
         {
             currentWave++;
             if (currentWave < waves.Length)
@@ -46,7 +55,8 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("Все волны пройдены!");
+                ClearAndResetGame _clearAndResetGame = FindAnyObjectByType<ClearAndResetGame>();
+                _clearAndResetGame.GameCompleted();
             }
         }
     }
@@ -55,7 +65,15 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log($"Все враги уничтожены. Следующая волна через {delayBetweenWaves} секунд...");
         yield return new WaitForSeconds(delayBetweenWaves);
+        StartCoroutine(SpeakNextWave(speakerDelay));
         StartCoroutine(SpawnWave(waves[currentWave]));
+    }
+
+    private IEnumerator SpeakNextWave(float speakerDelay)
+    {
+        _textSpeaker.enabled = true;
+        yield return new WaitForSeconds(speakerDelay);
+        _textSpeaker.enabled = false;
     }
 
     private IEnumerator SpawnWave(Wave wave)

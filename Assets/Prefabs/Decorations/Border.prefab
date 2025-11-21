@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 1526655832345158968}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -3048.6697, y: -1199.7502, z: 0}
-  m_LocalScale: {x: 410.4272, y: 681, z: 1}
+  m_LocalPosition: {x: -3048.6697, y: -1192.1509, z: 0}
+  m_LocalScale: {x: 552.06915, y: 681, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -42,7 +42,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1526655832345158968}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 1980485942910120040, guid: ec9b7ba5ad98de146b1f47851211c400, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

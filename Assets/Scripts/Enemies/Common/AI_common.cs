@@ -89,7 +89,7 @@ public class AI_common : MonoBehaviour
         if (proj != null)
         {
             proj.damage = GetComponent<UnitStats>().damage; // передаём урон врага
-            proj.owner = gameObject; // можно сохранить ссылку на владельца
+            proj.ownerTag = gameObject.tag; // можно сохранить ссылку на владельца
         }
 
         float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;

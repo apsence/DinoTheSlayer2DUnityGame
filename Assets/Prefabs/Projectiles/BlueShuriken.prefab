@@ -202,4 +202,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OnColliisionProjectile
   damage: 0
-  owner: {fileID: 0}
+  ownerTag: Enemy
+  player: {fileID: 0}
+  maxDistance: 3000

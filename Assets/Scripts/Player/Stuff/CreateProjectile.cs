@@ -13,7 +13,7 @@ public class CreatepProjectile : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePos - transform.position).normalized;
 
-            float spawnOffset = 100f; // расстояние от центра игрока
+            float spawnOffset = 200f; // расстояние от центра игрока
             Vector2 spawnPos = (Vector2)transform.position + direction * spawnOffset;
 
             GameObject projectile = Instantiate(prefab, spawnPos, Quaternion.identity);
@@ -25,7 +25,7 @@ public class CreatepProjectile : MonoBehaviour
                 if (stats != null)
                 {
                     proj.damage = stats.damage;
-                    proj.owner = stats.gameObject; // владелец — сам Player
+                    proj.ownerTag = gameObject.tag;
                 }
             }
 

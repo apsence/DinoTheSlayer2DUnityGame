@@ -3,7 +3,7 @@ using UnityEngine;
 public class OnCollisionProjectile : MonoBehaviour
 {
     public int damage;
-    public GameObject owner;
+    public string ownerTag;
     public GameObject player;
     public float maxDistance = 3000f;
 
@@ -14,28 +14,30 @@ public class OnCollisionProjectile : MonoBehaviour
 
     void Update()
     {
-        if (player == null)
-            player = GameObject.FindWithTag("Player");
-
-        float distance = Vector3.Distance(player.transform.position, transform.position);
-        if (distance > maxDistance)
-        {
-            Destroy(gameObject);
-        }
+        DestroyOutOfBorderProjectile();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // игнорируем владельца
-        if (other.gameObject == owner) return;
+        if (other.CompareTag(ownerTag)) return;
 
-        // игнорируем союзников
-        if (owner.CompareTag("Enemy") && other.CompareTag("Enemy")) return;
+        if (ownerTag == "Enemy" && other.CompareTag("Enemy")) return;
 
         UnitStats stats = other.GetComponent<UnitStats>();
         if (stats != null)
         {
             stats.TakeDamage(damage);
+            Destroy(gameObject);
+        }
+    }
+
+    void DestroyOutOfBorderProjectile()
+    {
+        if (player == null) return;
+
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+        if (distance > maxDistance)
+        {
             Destroy(gameObject);
         }
     }

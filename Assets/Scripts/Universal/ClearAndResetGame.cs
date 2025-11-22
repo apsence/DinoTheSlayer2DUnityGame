@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,12 +15,14 @@ public class ClearAndResetGame : MonoBehaviour
     private PauseManager _pauseManager;
     private GameObject player;
     private bool _gameCompleted;
+    private SpawnCoins _spawnCoins;
 
     void Awake()
     {
         _pauseManager = FindAnyObjectByType<PauseManager>();
         _levelManager = FindAnyObjectByType<LevelManager>();
         player = GameObject.FindWithTag("Player");
+        _spawnCoins = FindAnyObjectByType<SpawnCoins>();
     }
 
     public void InitGame()
@@ -42,6 +45,8 @@ public class ClearAndResetGame : MonoBehaviour
 
         _pauseManager.Resume();
         StartCoroutine(FadeInCoroutine());
+        _levelManager.RestartGame();
+        _spawnCoins.RestartGame();
     }
 
     public void OnClick()
@@ -119,8 +124,21 @@ public class ClearAndResetGame : MonoBehaviour
                 if (img != null) img.enabled = showGameOver;
                 if (tmp != null) tmp.enabled = showGameOver;
             }
+            Debug.LogError(winUIList.Count());
+        }
+
+        // --- управление интерфейсом игрока ---
+        PlayerGUI[] playerGuiList = FindObjectsByType<PlayerGUI>(FindObjectsSortMode.None);
+        foreach (PlayerGUI gui in playerGuiList)
+        {
+            Image img = gui.GetComponent<Image>();
+            TextMeshProUGUI tmp = gui.GetComponent<TextMeshProUGUI>();
+
+            if (img != null) img.enabled = !showGameOver;
+            if (tmp != null) tmp.enabled = !showGameOver;
         }
     }
+
 
     void DestroyAllObjects()
     {

@@ -17,6 +17,7 @@ TagManager:
   - DamageUpgradeCost
   - UpgradeHPButton
   - UpgradeDamageButton
+  - PlayerGUI
   layers:
   - Default
   - TransparentFX

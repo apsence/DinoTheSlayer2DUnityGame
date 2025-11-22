@@ -14,5 +14,9 @@ public class Cheats : MonoBehaviour
         {
             _clearAndResetGame.GameOver();
         }
+        if (Input.GetKeyDown(KeyCode.End))
+        {
+            _clearAndResetGame.GameCompleted();
+        }
     }
 }

@@ -22,6 +22,11 @@ public class SpawnCoins : MonoBehaviour
         StartCoroutine(SpawnRoutine());
     }
 
+    public void RestartGame()
+    {
+        StartCoroutine(SpawnRoutine());
+    }
+
     IEnumerator SpawnRoutine()
     {
         while (true)

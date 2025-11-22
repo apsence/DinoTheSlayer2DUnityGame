@@ -516,6 +516,7 @@ GameObject:
   - component: {fileID: 124005174}
   - component: {fileID: 124005176}
   - component: {fileID: 124005175}
+  - component: {fileID: 124005177}
   m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: HPUpgradeCost
@@ -641,6 +642,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124005173}
   m_CullTransparentMesh: 1
+--- !u!114 &124005177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124005173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &152397672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2213,6 +2226,7 @@ GameObject:
   - component: {fileID: 465334770}
   - component: {fileID: 465334772}
   - component: {fileID: 465334771}
+  - component: {fileID: 465334773}
   m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: WinUI
@@ -2338,6 +2352,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 465334769}
   m_CullTransparentMesh: 1
+--- !u!114 &465334773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465334769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ff2a7ea7f9cc44fa6c8d08d3efb09e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WinUI
 --- !u!1 &473671743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,6 +2636,7 @@ GameObject:
   - component: {fileID: 512837866}
   - component: {fileID: 512837868}
   - component: {fileID: 512837867}
+  - component: {fileID: 512837869}
   m_Layer: 7
   m_Name: CoinsCountIcon
   m_TagString: Untagged
@@ -2676,6 +2703,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 512837865}
   m_CullTransparentMesh: 1
+--- !u!114 &512837869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512837865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &519372390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3209,6 +3248,7 @@ GameObject:
   - component: {fileID: 635444020}
   - component: {fileID: 635444019}
   - component: {fileID: 635444018}
+  - component: {fileID: 635444021}
   m_Layer: 7
   m_Name: UpgradeDamage
   m_TagString: UpgradeDamageButton
@@ -3330,6 +3370,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635444016}
   m_CullTransparentMesh: 1
+--- !u!114 &635444021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635444016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &638569457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3489,6 +3541,7 @@ GameObject:
   - component: {fileID: 652216675}
   - component: {fileID: 652216677}
   - component: {fileID: 652216676}
+  - component: {fileID: 652216678}
   m_Layer: 7
   m_Name: DamageCount
   m_TagString: Untagged
@@ -3614,6 +3667,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652216674}
   m_CullTransparentMesh: 1
+--- !u!114 &652216678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652216674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1 &653046156
 GameObject:
   m_ObjectHideFlags: 0
@@ -4039,6 +4104,7 @@ GameObject:
   - component: {fileID: 749964351}
   - component: {fileID: 749964353}
   - component: {fileID: 749964352}
+  - component: {fileID: 749964354}
   m_Layer: 7
   m_Name: HealthCount
   m_TagString: Untagged
@@ -4164,6 +4230,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749964350}
   m_CullTransparentMesh: 1
+--- !u!114 &749964354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749964350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &759598284
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4643,6 +4721,7 @@ GameObject:
   - component: {fileID: 843170911}
   - component: {fileID: 843170910}
   - component: {fileID: 843170912}
+  - component: {fileID: 843170913}
   m_Layer: 7
   m_Name: HealthBar
   m_TagString: Untagged
@@ -4719,6 +4798,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1570acb5c852b8449a65113697f037c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthBarUpdate
+--- !u!114 &843170913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843170908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &861757545
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5311,6 +5402,7 @@ GameObject:
   - component: {fileID: 940649670}
   - component: {fileID: 940649669}
   - component: {fileID: 940649668}
+  - component: {fileID: 940649671}
   m_Layer: 7
   m_Name: UpgradeHPCanvas
   m_TagString: Untagged
@@ -5400,6 +5492,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &940649671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940649666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &995156080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6804,6 +6908,7 @@ GameObject:
   - component: {fileID: 1175770507}
   - component: {fileID: 1175770509}
   - component: {fileID: 1175770508}
+  - component: {fileID: 1175770510}
   m_Layer: 7
   m_Name: HeartIcon
   m_TagString: Untagged
@@ -6869,6 +6974,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1175770506}
   m_CullTransparentMesh: 1
+--- !u!114 &1175770510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175770506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1 &1190681986
 GameObject:
   m_ObjectHideFlags: 0
@@ -7399,6 +7516,7 @@ GameObject:
   - component: {fileID: 1241129708}
   - component: {fileID: 1241129710}
   - component: {fileID: 1241129709}
+  - component: {fileID: 1241129711}
   m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: DamageUpgradeCost
@@ -7524,6 +7642,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241129707}
   m_CullTransparentMesh: 1
+--- !u!114 &1241129711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241129707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1 &1270657838
 GameObject:
   m_ObjectHideFlags: 0
@@ -7988,6 +8118,7 @@ GameObject:
   - component: {fileID: 1382538342}
   - component: {fileID: 1382538344}
   - component: {fileID: 1382538343}
+  - component: {fileID: 1382538345}
   m_Layer: 7
   m_Name: UpgradeDamageOutline
   m_TagString: Untagged
@@ -8054,6 +8185,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382538341}
   m_CullTransparentMesh: 1
+--- !u!114 &1382538345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382538341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1 &1392779075
 GameObject:
   m_ObjectHideFlags: 0
@@ -8334,6 +8477,7 @@ GameObject:
   - component: {fileID: 1434667491}
   - component: {fileID: 1434667493}
   - component: {fileID: 1434667492}
+  - component: {fileID: 1434667494}
   m_Layer: 7
   m_Name: CountTXMeshPro
   m_TagString: CoinsCount
@@ -8459,6 +8603,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434667490}
   m_CullTransparentMesh: 1
+--- !u!114 &1434667494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434667490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &1444578149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9007,6 +9163,7 @@ GameObject:
   - component: {fileID: 1538408955}
   - component: {fileID: 1538408957}
   - component: {fileID: 1538408956}
+  - component: {fileID: 1538408958}
   m_Layer: 7
   m_Name: UpgradeHPOutline
   m_TagString: Untagged
@@ -9073,6 +9230,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538408954}
   m_CullTransparentMesh: 1
+--- !u!114 &1538408958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538408954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1 &1550223554
 GameObject:
   m_ObjectHideFlags: 0
@@ -9084,6 +9253,7 @@ GameObject:
   - component: {fileID: 1550223555}
   - component: {fileID: 1550223557}
   - component: {fileID: 1550223556}
+  - component: {fileID: 1550223558}
   m_Layer: 7
   m_Name: DamageIcon
   m_TagString: Untagged
@@ -9149,6 +9319,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1550223554}
   m_CullTransparentMesh: 1
+--- !u!114 &1550223558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1550223554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &1560298816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9387,7 +9569,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &1561278076
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9759,6 +9941,7 @@ GameObject:
   - component: {fileID: 1612283700}
   - component: {fileID: 1612283702}
   - component: {fileID: 1612283701}
+  - component: {fileID: 1612283703}
   m_Layer: 7
   m_Name: HealthBarOutline
   m_TagString: Untagged
@@ -9824,6 +10007,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612283699}
   m_CullTransparentMesh: 1
+--- !u!114 &1612283703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612283699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &1630319359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10467,6 +10662,7 @@ GameObject:
   - component: {fileID: 1849540189}
   - component: {fileID: 1849540191}
   - component: {fileID: 1849540190}
+  - component: {fileID: 1849540192}
   m_Layer: 7
   m_Name: Sword
   m_TagString: Untagged
@@ -10531,6 +10727,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1849540188}
   m_CullTransparentMesh: 1
+--- !u!114 &1849540192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849540188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1 &1858728745
 GameObject:
   m_ObjectHideFlags: 0
@@ -10935,6 +11143,7 @@ GameObject:
   - component: {fileID: 1894181535}
   - component: {fileID: 1894181537}
   - component: {fileID: 1894181536}
+  - component: {fileID: 1894181538}
   m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: WinUI
@@ -11060,6 +11269,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1894181534}
   m_CullTransparentMesh: 1
+--- !u!114 &1894181538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894181534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ff2a7ea7f9cc44fa6c8d08d3efb09e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WinUI
 --- !u!1 &1895219852
 GameObject:
   m_ObjectHideFlags: 0
@@ -11867,6 +12088,7 @@ GameObject:
   - component: {fileID: 2089859763}
   - component: {fileID: 2089859762}
   - component: {fileID: 2089859761}
+  - component: {fileID: 2089859764}
   m_Layer: 7
   m_Name: ResetGameButton
   m_TagString: WinUI
@@ -11940,7 +12162,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 486734029}
         m_TargetAssemblyTypeName: ClearAndResetGame, Assembly-CSharp
-        m_MethodName: GameCompleted
+        m_MethodName: InitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11988,6 +12210,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2089859759}
   m_CullTransparentMesh: 1
+--- !u!114 &2089859764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089859759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ff2a7ea7f9cc44fa6c8d08d3efb09e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WinUI
 --- !u!1 &2103599674
 GameObject:
   m_ObjectHideFlags: 0
@@ -11999,6 +12233,7 @@ GameObject:
   - component: {fileID: 2103599675}
   - component: {fileID: 2103599677}
   - component: {fileID: 2103599676}
+  - component: {fileID: 2103599678}
   m_Layer: 7
   m_Name: Heart
   m_TagString: Untagged
@@ -12063,6 +12298,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2103599674}
   m_CullTransparentMesh: 1
+--- !u!114 &2103599678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103599674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1 &2106586655
 GameObject:
   m_ObjectHideFlags: 0
@@ -12180,6 +12427,7 @@ GameObject:
   - component: {fileID: 2117008536}
   - component: {fileID: 2117008535}
   - component: {fileID: 2117008534}
+  - component: {fileID: 2117008537}
   m_Layer: 7
   m_Name: UpgradeHP
   m_TagString: UpgradeHPButton
@@ -12301,6 +12549,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117008532}
   m_CullTransparentMesh: 1
+--- !u!114 &2117008537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117008532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a02e135d48e4f4381f75bd0fb6919a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGUI
 --- !u!1001 &2126628384
 PrefabInstance:
   m_ObjectHideFlags: 0

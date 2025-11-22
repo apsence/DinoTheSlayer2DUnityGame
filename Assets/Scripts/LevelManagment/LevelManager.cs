@@ -70,6 +70,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void RestartGame()
+    {
+        StartCoroutine(SpawnWave(waves[currentWave]));
+    }
 
     private IEnumerator StartNextWave()
     {

@@ -1608,13 +1608,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   currentWave: 0
-  waves: []
+  waves:
+  - groups:
+    - prefab: {fileID: 5928669588167566675, guid: c9698fcc7fa71734fad768f1987e9244, type: 3}
+      count: 5
+  - groups:
+    - prefab: {fileID: 5928669588167566675, guid: c9698fcc7fa71734fad768f1987e9244, type: 3}
+      count: 8
+  - groups:
+    - prefab: {fileID: 5928669588167566675, guid: c9698fcc7fa71734fad768f1987e9244, type: 3}
+      count: 4
+    - prefab: {fileID: 978915130581242672, guid: 466632ff518ea6d4f89ba64b61f3ca62, type: 3}
+      count: 3
+  - groups:
+    - prefab: {fileID: 5928669588167566675, guid: c9698fcc7fa71734fad768f1987e9244, type: 3}
+      count: 3
+    - prefab: {fileID: 978915130581242672, guid: 466632ff518ea6d4f89ba64b61f3ca62, type: 3}
+      count: 5
+  - groups:
+    - prefab: {fileID: 5928669588167566675, guid: c9698fcc7fa71734fad768f1987e9244, type: 3}
+      count: 3
+    - prefab: {fileID: 978915130581242672, guid: 466632ff518ea6d4f89ba64b61f3ca62, type: 3}
+      count: 1
+    - prefab: {fileID: 4337951405829463689, guid: 5728351c5fa780c46ab5107518943d9e, type: 3}
+      count: 3
+  - groups:
+    - prefab: {fileID: 5928669588167566675, guid: c9698fcc7fa71734fad768f1987e9244, type: 3}
+      count: 4
+    - prefab: {fileID: 4337951405829463689, guid: 5728351c5fa780c46ab5107518943d9e, type: 3}
+      count: 5
   spawnPoints:
   - {fileID: 740986759}
   - {fileID: 1871258411}
   - {fileID: 1294432753}
   - {fileID: 829245960}
   - {fileID: 653046157}
+  - {fileID: 1055415242}
+  - {fileID: 1872691504}
+  - {fileID: 890726556}
+  - {fileID: 1949064306}
   delayBetweenWaves: 7
   delayBetweenEnemies: 0.1
   speakerDelay: 4

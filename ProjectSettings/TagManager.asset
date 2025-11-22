@@ -13,6 +13,10 @@ TagManager:
   - UpgradesSpeaker
   - CoinsCount
   - GameArea
+  - HPUpgradeCost
+  - DamageUpgradeCost
+  - UpgradeHPButton
+  - UpgradeDamageButton
   layers:
   - Default
   - TransparentFX

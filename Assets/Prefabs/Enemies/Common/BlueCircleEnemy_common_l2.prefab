@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4488596260487840959}
   m_Layer: 0
   m_Name: BlueCircleEnemy_common_l2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI_common
   player: {fileID: 0}
   projectilePrefab: {fileID: 8305917686206284404, guid: fc15f2a950198824fa2523025a3076b5, type: 3}
-  projectileSpeed: 450
+  projectileSpeed: 500
   normalSpeed: 200
   slowSpeed: 250
   safeDistance: 150
@@ -213,3 +213,4 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   healthText: {fileID: 0}
   damageText: {fileID: 0}
+  _levelManager: {fileID: 0}

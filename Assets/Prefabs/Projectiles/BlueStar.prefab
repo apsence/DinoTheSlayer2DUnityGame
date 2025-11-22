@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 868409289721507388}
   - component: {fileID: 5643224553452897693}
   - component: {fileID: 8437276404382901439}
+  - component: {fileID: 1778370922232684231}
   m_Layer: 0
   m_Name: BlueStar
   m_TagString: Untagged
@@ -188,3 +189,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1778370922232684231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8305917686206284404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a1950d3b3a4bd44b1eb6322769b225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnCollisionProjectile
+  damage: 0
+  ownerTag: Enemy
+  player: {fileID: 0}
+  maxDistance: 3000

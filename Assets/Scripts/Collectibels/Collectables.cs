@@ -9,11 +9,10 @@ public class Collectables : MonoBehaviour
 {
 
     private SpawnCoins _spawnCoins;
-    private TextMeshPro _playerCoinsText;
+    private TextMeshProUGUI _playerCoinsText;
     private Coin _coin;
     void Awake()
     {
-        _playerCoinsText = GameObject.FindWithTag("CoinsCount").GetComponent<TextMeshPro>();
         _coin = FindAnyObjectByType<Coin>();
         _spawnCoins = FindAnyObjectByType<SpawnCoins>();
     }
@@ -24,8 +23,9 @@ public class Collectables : MonoBehaviour
         {
             Destroy(gameObject);
             _coin.coinsTakenByPlayer += 1;
+            _coin.RefresfCountOfCoins();
             _spawnCoins.CoinCollected();
-            _playerCoinsText.text = _coin.coinsTakenByPlayer.ToString();
+
         }
     }
 }

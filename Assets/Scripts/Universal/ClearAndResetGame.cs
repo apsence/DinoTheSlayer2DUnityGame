@@ -9,51 +9,32 @@ public class ClearAndResetGame : MonoBehaviour
     public float fadeDuration = 2f;
     public Image fadeImage;
     public bool isGameEnd = false;
-    private LevelManager _levelManager;
 
+    private LevelManager _levelManager;
     private PauseManager _pauseManager;
     private GameObject player;
-    private bool _revert = false;
     private bool _gameCompleted;
 
-    void Start()
+    void Awake()
     {
         _pauseManager = FindAnyObjectByType<PauseManager>();
         _levelManager = FindAnyObjectByType<LevelManager>();
-        isGameEnd = true;
-
         player = GameObject.FindWithTag("Player");
-        UnitStats stats = player.GetComponent<UnitStats>();
-        stats.health = stats.maxHealth;
-        stats.RefreshPlayerHUD();
-
-        player.transform.position = Vector2.zero;
     }
 
-    void DestroyAllObjects()
+    public void InitGame()
     {
-        AI_common[] list = FindObjectsByType<AI_common>(FindObjectsSortMode.None);
-        foreach (AI_common ai in list)
+        if (player != null)
         {
-            Destroy(ai.gameObject);
+            UnitStats stats = player.GetComponent<UnitStats>();
+            stats.health = stats.maxHealth;
+            stats.RefreshPlayerHUD();
+            player.transform.position = Vector2.zero;
+            player.SetActive(true);
         }
 
-        Collectables[] collectables = FindObjectsByType<Collectables>(FindObjectsSortMode.None);
-        foreach (Collectables col in collectables)
-        {
-            Destroy(col.gameObject);
-        }
-
-        OnCollisionProjectile[] onCollisionProjectiles = FindObjectsByType<OnCollisionProjectile>(FindObjectsSortMode.None);
-        foreach (Collectables collision in collectables)
-        {
-            Destroy(collision.gameObject);
-        }
-    }
-
-    public void OnClick()
-    {
-        player.SetActive(true);
+        _levelManager.currentWave = 0;
+        isGameEnd = false;
 
         Color c = fadeImage.color;
         c.a = 1f;
@@ -61,20 +42,24 @@ public class ClearAndResetGame : MonoBehaviour
 
         _pauseManager.Resume();
         StartCoroutine(FadeInCoroutine());
-        _levelManager.currentWave = 0;
-        isGameEnd = false;
+    }
 
+    public void OnClick()
+    {
+        InitGame();
     }
 
     public void GameOver()
     {
+        isGameEnd = true;
         StartCoroutine(FadeOutCoroutine());
     }
 
     public void GameCompleted()
     {
-        StartCoroutine(FadeOutCoroutine());
+        isGameEnd = true;
         _gameCompleted = true;
+        StartCoroutine(FadeOutCoroutine());
     }
 
     private IEnumerator FadeOutCoroutine()
@@ -89,13 +74,14 @@ public class ClearAndResetGame : MonoBehaviour
             fadeImage.color = c;
             yield return null;
         }
-        ShowReTryUI();
+        DestroyAllObjects();
+        ShowReTryUI(true);
         _pauseManager.Pause();
     }
 
     private IEnumerator FadeInCoroutine()
     {
-        ShowReTryUI();
+        ShowReTryUI(false);
         float elapsed = 0f;
         Color c = fadeImage.color;
 
@@ -108,19 +94,18 @@ public class ClearAndResetGame : MonoBehaviour
         }
     }
 
-    void ShowReTryUI()
+    void ShowReTryUI(bool showGameOver)
     {
-        GameOverUI[] list = FindObjectsByType<GameOverUI>(FindObjectsSortMode.None);
-
         if (!_gameCompleted)
         {
+            GameOverUI[] list = FindObjectsByType<GameOverUI>(FindObjectsSortMode.None);
             foreach (GameOverUI ui in list)
             {
                 Image img = ui.GetComponent<Image>();
                 TextMeshProUGUI tmp = ui.GetComponent<TextMeshProUGUI>();
 
-                if (img != null) img.enabled = !_revert;
-                if (tmp != null) tmp.enabled = !_revert;
+                if (img != null) img.enabled = showGameOver;
+                if (tmp != null) tmp.enabled = showGameOver;
             }
         }
         else
@@ -131,11 +116,29 @@ public class ClearAndResetGame : MonoBehaviour
                 Image img = ui.GetComponent<Image>();
                 TextMeshProUGUI tmp = ui.GetComponent<TextMeshProUGUI>();
 
-                if (img != null) img.enabled = !_revert;
-                if (tmp != null) tmp.enabled = !_revert;
+                if (img != null) img.enabled = showGameOver;
+                if (tmp != null) tmp.enabled = showGameOver;
             }
         }
-        _revert = !_revert;
+    }
+
+    void DestroyAllObjects()
+    {
+        AI_common[] list = FindObjectsByType<AI_common>(FindObjectsSortMode.None);
+        foreach (AI_common ai in list)
+        {
+            Destroy(ai.gameObject);
+        }
+        Collectables[] collectables = FindObjectsByType<Collectables>(FindObjectsSortMode.None);
+        foreach (Collectables col in collectables)
+        {
+            Destroy(col.gameObject);
+        }
+        OnCollisionProjectile[] onCollisionProjectiles = FindObjectsByType<OnCollisionProjectile>(FindObjectsSortMode.None);
+        foreach (OnCollisionProjectile collision in onCollisionProjectiles)
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
 }

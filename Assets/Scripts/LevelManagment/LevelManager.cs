@@ -17,7 +17,11 @@ public class LevelManager : MonoBehaviour
     public float speakerDelay = 4f;
 
     private ClearAndResetGame _clearAndResetGame;
-    private TextMeshPro _textSpeaker;
+    private TextMeshProUGUI _textSpeaker;
+    private int _aliveEnemies = 0;
+    private bool _nextWaveScheduled = false;
+    private LevelManager _levelManager;
+
 
     [System.Serializable]
     public class EnemyGroup
@@ -34,8 +38,9 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        _textSpeaker = GameObject.FindWithTag("WaveSpeaker").GetComponent<TextMeshPro>();
+        _textSpeaker = GameObject.FindWithTag("WaveSpeaker").GetComponent<TextMeshProUGUI>();
         _clearAndResetGame = FindAnyObjectByType<ClearAndResetGame>();
+        _levelManager = FindAnyObjectByType<LevelManager>();
         currentWave = 0;
         if (waves.Length > 0)
         {
@@ -46,8 +51,13 @@ public class LevelManager : MonoBehaviour
 
     public void OnEnemyKilled()
     {
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && _clearAndResetGame.isGameEnd == false)
+        _aliveEnemies--;
+
+        if (_aliveEnemies <= 0 && !_clearAndResetGame.isGameEnd && !_nextWaveScheduled)
         {
+            Debug.LogError("Все враги убиты");
+            _nextWaveScheduled = true;
+
             currentWave++;
             if (currentWave < waves.Length)
             {
@@ -55,11 +65,11 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                ClearAndResetGame _clearAndResetGame = FindAnyObjectByType<ClearAndResetGame>();
                 _clearAndResetGame.GameCompleted();
             }
         }
     }
+
 
     private IEnumerator StartNextWave()
     {
@@ -78,14 +88,32 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator SpawnWave(Wave wave)
     {
+        _aliveEnemies = 0;
+        _nextWaveScheduled = false;
+
         foreach (EnemyGroup group in wave.groups)
         {
             for (int i = 0; i < group.count; i++)
             {
                 Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-                Instantiate(group.prefab, spawnPoint.position, Quaternion.identity);
+                GameObject enemy = Instantiate(group.prefab, spawnPoint.position, Quaternion.identity);
+
+                // Проставляем ссылку на LevelManager
+                UnitStats stats = enemy.GetComponent<UnitStats>();
+                if (stats != null)
+                {
+                    stats._levelManager = this;
+                    _aliveEnemies++;
+                }
+                else
+                {
+                    Debug.LogWarning($"На префабе {group.prefab.name} нет UnitStats!");
+                }
+
                 yield return new WaitForSeconds(delayBetweenEnemies);
             }
         }
     }
+
+
 }

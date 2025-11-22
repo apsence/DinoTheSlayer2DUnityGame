@@ -16,6 +16,8 @@ public class UnitStats : MonoBehaviour
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI damageText;
 
+    [HideInInspector] public LevelManager _levelManager;
+
     void Start()
     {
         RefreshPlayerHUD();
@@ -64,10 +66,9 @@ public class UnitStats : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} погиб");
 
-        LevelManager manager = FindFirstObjectByType<LevelManager>();
-        if (manager != null && CompareTag("Enemy"))
+        if (_levelManager != null && CompareTag("Enemy"))
         {
-            manager.OnEnemyKilled();
+            _levelManager.OnEnemyKilled();
         }
 
         if (gameObject.tag == "Player" && health <= 0)

@@ -10,6 +10,9 @@ TagManager:
   - GameOverGUI
   - WinUI
   - WaveSpeaker
+  - UpgradesSpeaker
+  - CoinsCount
+  - GameArea
   layers:
   - Default
   - TransparentFX

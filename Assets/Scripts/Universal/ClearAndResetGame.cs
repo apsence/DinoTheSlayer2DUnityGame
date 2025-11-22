@@ -23,14 +23,32 @@ public class ClearAndResetGame : MonoBehaviour
         isGameEnd = true;
 
         player = GameObject.FindWithTag("Player");
-        AI_common[] list = FindObjectsByType<AI_common>(FindObjectsSortMode.None);
-        foreach (AI_common ai in list)
-            Destroy(ai.gameObject);
         UnitStats stats = player.GetComponent<UnitStats>();
         stats.health = stats.maxHealth;
         stats.RefreshPlayerHUD();
 
         player.transform.position = Vector2.zero;
+    }
+
+    void DestroyAllObjects()
+    {
+        AI_common[] list = FindObjectsByType<AI_common>(FindObjectsSortMode.None);
+        foreach (AI_common ai in list)
+        {
+            Destroy(ai.gameObject);
+        }
+
+        Collectables[] collectables = FindObjectsByType<Collectables>(FindObjectsSortMode.None);
+        foreach (Collectables col in collectables)
+        {
+            Destroy(col.gameObject);
+        }
+
+        OnCollisionProjectile[] onCollisionProjectiles = FindObjectsByType<OnCollisionProjectile>(FindObjectsSortMode.None);
+        foreach (Collectables collision in collectables)
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
     public void OnClick()

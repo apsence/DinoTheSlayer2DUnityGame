@@ -8524,7 +8524,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Count
+  m_text: '0
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6bdbefa9f8108774a8f479122ed495d1, type: 2}
   m_sharedMaterial: {fileID: -965276201520890512, guid: 6bdbefa9f8108774a8f479122ed495d1, type: 2}
@@ -8887,6 +8889,10 @@ MonoBehaviour:
   hpPerLevel: 10
   damagePerLevel: 3
   upgradesSpeakerDuration: 3
+  currentCostOfHPUpgrade: 0
+  currentCostOfDamageUpgrade: 0
+  currentHPLevel: 0
+  currentDamageLevel: 0
 --- !u!1001 &1490207343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9631,6 +9637,8 @@ MonoBehaviour:
   damage: 6
   health: 100
   maxHealth: 100
+  defaultMaxHP: 100
+  defaultDamage: 6
   healthBar: {fileID: 843170910}
   healthText: {fileID: 749964352}
   damageText: {fileID: 652216676}

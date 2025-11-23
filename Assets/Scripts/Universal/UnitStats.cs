@@ -11,6 +11,10 @@ public class UnitStats : MonoBehaviour
     public int health;
     public int maxHealth = 100;
 
+    [Header("Default Player Stats")]
+    public int defaultMaxHP = 100;
+    public int defaultDamage = 6;
+
     [Header("UI (Player Only)")]
     public Image healthBar;
     public TextMeshProUGUI healthText;

@@ -17,10 +17,11 @@ public class Upgrades : MonoBehaviour
     [Header("Настройки спикера прокачки")]
     public float upgradesSpeakerDuration = 3f;
 
-    private int currentCostOfHPUpgrade;
-    private int currentCostOfDamageUpgrade;
-    private int currentHPLevel = 0;
-    private int currentDamageLevel = 0;
+    [Header("Отладка")]
+    public int currentCostOfHPUpgrade;
+    public int currentCostOfDamageUpgrade;
+    public int currentHPLevel = 0;
+    public int currentDamageLevel = 0;
 
     private Coin _coins;
     private GameObject _player;

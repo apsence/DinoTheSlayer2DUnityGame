@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,27 +14,39 @@ public class ClearAndResetGame : MonoBehaviour
 
     private LevelManager _levelManager;
     private PauseManager _pauseManager;
-    private GameObject player;
+    private GameObject _player;
     private bool _gameCompleted;
     private SpawnCoins _spawnCoins;
+    private Upgrades _upgrades;
+    private TextMeshProUGUI _hpUpgradeCostMesh;
+    private TextMeshProUGUI _damageUpgradeCostMesh;
+    private Button _upgradeHPButton;
+    private Button _upgradeDamageButton;
 
     void Awake()
     {
         _pauseManager = FindAnyObjectByType<PauseManager>();
         _levelManager = FindAnyObjectByType<LevelManager>();
-        player = GameObject.FindWithTag("Player");
+        _player = GameObject.FindWithTag("Player");
         _spawnCoins = FindAnyObjectByType<SpawnCoins>();
+
+        _upgrades = FindAnyObjectByType<Upgrades>();
+        _hpUpgradeCostMesh = GameObject.FindWithTag("HPUpgradeCost").GetComponent<TextMeshProUGUI>();
+        _damageUpgradeCostMesh = GameObject.FindWithTag("DamageUpgradeCost").GetComponent<TextMeshProUGUI>();
+        _upgradeHPButton = GameObject.FindWithTag("UpgradeHPButton").GetComponent<Button>();
+        _upgradeDamageButton = GameObject.FindWithTag("UpgradeDamageButton").GetComponent<Button>();
     }
 
     public void InitGame()
     {
-        if (player != null)
+        if (_player != null)
         {
-            UnitStats stats = player.GetComponent<UnitStats>();
+            UnitStats stats = _player.GetComponent<UnitStats>();
             stats.health = stats.maxHealth;
             stats.RefreshPlayerHUD();
-            player.transform.position = Vector2.zero;
-            player.SetActive(true);
+            RefreshPlayerStatsAndUpgrades();
+            _player.transform.position = Vector2.zero;
+            _player.SetActive(true);
         }
 
         _levelManager.currentWave = 0;
@@ -139,6 +152,34 @@ public class ClearAndResetGame : MonoBehaviour
         }
     }
 
+
+    void RefreshPlayerStatsAndUpgrades()
+    {
+        UnitStats _playerStats = _player.GetComponent<UnitStats>();
+
+        _playerStats.health = _playerStats.defaultMaxHP;
+        _playerStats.maxHealth = _playerStats.defaultMaxHP;
+
+        _playerStats.damage = _playerStats.defaultDamage;
+        _playerStats.RefreshPlayerHUD();
+
+        Coin _playerCoins = _player.GetComponent<Coin>();
+        _playerCoins.coinsTakenByPlayer = 0;
+        _playerCoins.RefresfCountOfCoins();
+
+
+
+        _upgrades.currentDamageLevel = 0;
+        _upgrades.currentHPLevel = 0;
+        _upgrades.currentCostOfHPUpgrade = _upgrades.costOfUpgradeHP[0];
+        _upgrades.currentCostOfDamageUpgrade = _upgrades.costOfUpgradeDamage[0];
+
+        _hpUpgradeCostMesh.text = _upgrades.currentCostOfHPUpgrade.ToString();
+        _damageUpgradeCostMesh.text = _upgrades.currentCostOfDamageUpgrade.ToString();
+
+        _upgradeHPButton.interactable = true;
+        _upgradeDamageButton.interactable = true;
+    }
 
     void DestroyAllObjects()
     {

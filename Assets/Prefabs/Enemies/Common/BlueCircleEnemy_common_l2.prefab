@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AI_common
   player: {fileID: 0}
   projectilePrefab: {fileID: 8305917686206284404, guid: fc15f2a950198824fa2523025a3076b5, type: 3}
-  projectileSpeed: 500
+  projectileSpeed: 600
   normalSpeed: 200
   slowSpeed: 250
   safeDistance: 150
@@ -210,6 +210,8 @@ MonoBehaviour:
   damage: 3
   health: 10
   maxHealth: 10
+  defaultMaxHP: 100
+  defaultDamage: 6
   healthBar: {fileID: 0}
   healthText: {fileID: 0}
   damageText: {fileID: 0}

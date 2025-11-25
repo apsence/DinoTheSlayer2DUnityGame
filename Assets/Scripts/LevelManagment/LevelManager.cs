@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     private TextMeshProUGUI _textSpeaker;
     private int _aliveEnemies = 0;
     private bool _nextWaveScheduled = false;
-    private LevelManager _levelManager;
+    private Speaker _speaker;
 
 
     [System.Serializable]
@@ -40,11 +40,11 @@ public class LevelManager : MonoBehaviour
     {
         _textSpeaker = GameObject.FindWithTag("WaveSpeaker").GetComponent<TextMeshProUGUI>();
         _clearAndResetGame = FindAnyObjectByType<ClearAndResetGame>();
-        _levelManager = FindAnyObjectByType<LevelManager>();
+        _speaker = FindAnyObjectByType<Speaker>();
         currentWave = 0;
         if (waves.Length > 0)
         {
-            StartCoroutine(SpawnWave(waves[currentWave]));
+            _speaker.AddCoroutine(SpawnWave(waves[currentWave]));
         }
 
     }
@@ -61,7 +61,7 @@ public class LevelManager : MonoBehaviour
             currentWave++;
             if (currentWave < waves.Length)
             {
-                StartCoroutine(StartNextWave());
+                _speaker.AddCoroutine(StartNextWave());
             }
             else
             {
@@ -72,15 +72,15 @@ public class LevelManager : MonoBehaviour
 
     public void RestartGame()
     {
-        StartCoroutine(SpawnWave(waves[currentWave]));
+        _speaker.AddCoroutine(SpawnWave(waves[currentWave]));
     }
 
     private IEnumerator StartNextWave()
     {
         Debug.Log($"Все враги уничтожены. Следующая волна через {delayBetweenWaves} секунд...");
         yield return new WaitForSeconds(delayBetweenWaves);
-        StartCoroutine(SpeakNextWave(speakerDelay));
-        StartCoroutine(SpawnWave(waves[currentWave]));
+        _speaker.AddCoroutine(SpeakNextWave(speakerDelay));
+        _speaker.AddCoroutine(SpawnWave(waves[currentWave]));
     }
 
     private IEnumerator SpeakNextWave(float speakerDelay)
@@ -118,6 +118,4 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
-
 }

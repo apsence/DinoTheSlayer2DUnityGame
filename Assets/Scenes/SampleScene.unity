@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CreatepProjectile
   prefab: {fileID: 8371794540845003026, guid: 6c774ef4b3ada2e46ba2008721a4ff87, type: 3}
   projectileSpeedBoost: 10
-  projectileSpeedMultiplier: 85
+  projectileSpeedMultiplier: 90
 --- !u!1001 &236992800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1740,6 +1740,7 @@ GameObject:
   - component: {fileID: 409217108}
   - component: {fileID: 409217107}
   - component: {fileID: 409217109}
+  - component: {fileID: 409217110}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -1838,6 +1839,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6674142722d774547ba6e32dc41fcf87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseManager
+--- !u!114 &409217110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409217106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c97f7118c0bd7f849879148d6756f730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Speaker
 --- !u!1 &409530774
 GameObject:
   m_ObjectHideFlags: 0
@@ -5288,8 +5301,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 85, y: -55}
-  m_SizeDelta: {x: 275, y: 50}
+  m_AnchoredPosition: {x: 25, y: -55}
+  m_SizeDelta: {x: 450, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &930412375
 MonoBehaviour:
@@ -8888,7 +8901,7 @@ MonoBehaviour:
   maxLevelOfUpgrades: 2
   hpPerLevel: 10
   damagePerLevel: 3
-  upgradesSpeakerDuration: 3
+  upgradesSpeakerDuration: 2
   currentCostOfHPUpgrade: 0
   currentCostOfDamageUpgrade: 0
   currentHPLevel: 0
@@ -9655,7 +9668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 540425de507c1ea4d972476cf1aa2f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Coin
-  coinsTakenByPlayer: 0
+  coinsTakenByPlayer: 15
 --- !u!1 &1564130666
 GameObject:
   m_ObjectHideFlags: 0

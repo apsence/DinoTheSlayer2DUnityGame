@@ -24,13 +24,13 @@ public class Upgrades : MonoBehaviour
     public int currentDamageLevel = 0;
 
     private Coin _coins;
-    private GameObject _player;
     private TextMeshProUGUI _upgradesSpeaker;
     private UnitStats _unitStats;
     private TextMeshProUGUI _HPUpgradeCost;
     private TextMeshProUGUI _DamageUpgradeCost;
     private Button _upgradeHPButton;
     private Button _upgradeDamageButton;
+    private Speaker _speaker;
 
     void Awake()
     {
@@ -38,12 +38,12 @@ public class Upgrades : MonoBehaviour
         currentCostOfDamageUpgrade = costOfUpgradeDamage[0];
         _coins = FindAnyObjectByType<Coin>();
         _unitStats = GameObject.FindWithTag("Player").GetComponent<UnitStats>();
-        _player = GameObject.FindWithTag("Player");
         _upgradesSpeaker = GameObject.FindWithTag("UpgradesSpeaker").GetComponent<TextMeshProUGUI>();
         _HPUpgradeCost = GameObject.FindWithTag("HPUpgradeCost").GetComponent<TextMeshProUGUI>();
         _DamageUpgradeCost = GameObject.FindWithTag("DamageUpgradeCost").GetComponent<TextMeshProUGUI>();
         _upgradeHPButton = GameObject.FindWithTag("UpgradeHPButton").GetComponent<Button>();
         _upgradeDamageButton = GameObject.FindWithTag("UpgradeDamageButton").GetComponent<Button>();
+        _speaker = FindAnyObjectByType<Speaker>();
     }
 
     void Start()
@@ -69,17 +69,21 @@ public class Upgrades : MonoBehaviour
 
             currentHPLevel++;
 
-            if (currentHPLevel >= costOfUpgradeHP.Count)
-                _HPUpgradeCost.text = "Max";
-            else
+            if (currentHPLevel < costOfUpgradeHP.Count)
+            {
                 currentCostOfHPUpgrade = costOfUpgradeHP[currentHPLevel];
+            }
+            else
+            {
+                _HPUpgradeCost.text = "";
+            }
 
             RefreshHPCost();
             BlockHPUpgrade();
         }
         else
         {
-            StartCoroutine(ShowMessageFromUpgradesSpeaker("Not enough gold"));
+            _speaker.AddCoroutine(ShowMessageFromUpgradesSpeaker("Not enough gold"));
         }
     }
 
@@ -98,17 +102,20 @@ public class Upgrades : MonoBehaviour
 
             currentDamageLevel++;
 
-            if (currentDamageLevel >= costOfUpgradeDamage.Count)
-                _DamageUpgradeCost.text = "Max";
-            else
+            if (currentDamageLevel < costOfUpgradeDamage.Count)
+            {
                 currentCostOfDamageUpgrade = costOfUpgradeDamage[currentDamageLevel];
-
+            }
+            else
+            {
+                _DamageUpgradeCost.text = "";
+            }
             RefreshDamageCost();
             BlockDamageUpgrade();
         }
         else
         {
-            StartCoroutine(ShowMessageFromUpgradesSpeaker("Not enough gold"));
+            _speaker.AddCoroutine(ShowMessageFromUpgradesSpeaker("Not enough gold"));
         }
     }
 
@@ -138,8 +145,8 @@ public class Upgrades : MonoBehaviour
     {
         if (currentDamageLevel >= costOfUpgradeDamage.Count)
         {
-            StartCoroutine(ShowMessageFromUpgradesSpeaker("Damage upgrade maxed out"));
-            _DamageUpgradeCost.text = "Max";
+            _speaker.AddCoroutine(ShowMessageFromUpgradesSpeaker("Damage upgrade maxed out"));
+            _DamageUpgradeCost.text = "";
             _upgradeDamageButton.interactable = false;
             return;
         }
@@ -149,8 +156,8 @@ public class Upgrades : MonoBehaviour
     {
         if (currentHPLevel >= costOfUpgradeHP.Count)
         {
-            StartCoroutine(ShowMessageFromUpgradesSpeaker("HP upgrade maxed out"));
-            _HPUpgradeCost.text = "Max";
+            _speaker.AddCoroutine(ShowMessageFromUpgradesSpeaker("HP upgrade maxed out"));
+            _HPUpgradeCost.text = "";
             _upgradeHPButton.interactable = false;
             return;
         }

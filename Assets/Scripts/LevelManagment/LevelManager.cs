@@ -38,14 +38,14 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        _textSpeaker = GameObject.FindWithTag("WaveSpeaker").GetComponent<TextMeshProUGUI>();
-        _clearAndResetGame = FindAnyObjectByType<ClearAndResetGame>();
-        _speaker = FindAnyObjectByType<Speaker>();
-        currentWave = 0;
-        if (waves.Length > 0)
-        {
-            _speaker.AddCoroutine(SpawnWave(waves[currentWave]));
-        }
+        // _textSpeaker = GameObject.FindWithTag("WaveSpeaker").GetComponent<TextMeshProUGUI>();
+        // _clearAndResetGame = FindAnyObjectByType<ClearAndResetGame>();
+        // _speaker = FindAnyObjectByType<Speaker>();
+        // currentWave = 0;
+        // if (waves.Length > 0)
+        // {
+        //     _speaker.AddCoroutine(SpawnWave(waves[currentWave]));
+        // }
 
     }
 
@@ -103,16 +103,16 @@ public class LevelManager : MonoBehaviour
                 GameObject enemy = Instantiate(group.prefab, spawnPoint.position, Quaternion.identity);
 
                 // Проставляем ссылку на LevelManager
-                UnitStats stats = enemy.GetComponent<UnitStats>();
-                if (stats != null)
-                {
-                    stats._levelManager = this;
-                    _aliveEnemies++;
-                }
-                else
-                {
-                    Debug.LogWarning($"На префабе {group.prefab.name} нет UnitStats!");
-                }
+                // UnitStats stats = enemy.GetComponent<UnitStats>();
+                // if (stats != null)
+                // {
+                //     stats._levelManager = this;
+                //     _aliveEnemies++;
+                // }
+                // else
+                // {
+                //     Debug.LogWarning($"На префабе {group.prefab.name} нет UnitStats!");
+                // }
 
                 yield return new WaitForSeconds(delayBetweenEnemies);
             }

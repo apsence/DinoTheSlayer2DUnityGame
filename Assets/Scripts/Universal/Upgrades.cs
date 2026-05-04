@@ -25,11 +25,13 @@ public class Upgrades : MonoBehaviour
 
     private Coin _coins;
     private TextMeshProUGUI _upgradesSpeaker;
-    private UnitStats _unitStats;
     private TextMeshProUGUI _HPUpgradeCost;
     private TextMeshProUGUI _DamageUpgradeCost;
     private Button _upgradeHPButton;
     private Button _upgradeDamageButton;
+    private PlayerGUI _playerGUI;
+    private Health _health;
+    private Attacker _attacker;
     private Speaker _speaker;
 
     void Awake()
@@ -37,7 +39,7 @@ public class Upgrades : MonoBehaviour
         currentCostOfHPUpgrade = costOfUpgradeHP[0];
         currentCostOfDamageUpgrade = costOfUpgradeDamage[0];
         _coins = FindAnyObjectByType<Coin>();
-        _unitStats = GameObject.FindWithTag("Player").GetComponent<UnitStats>();
+        _playerGUI = GameObject.FindWithTag("Player").GetComponent<PlayerGUI>();
         _upgradesSpeaker = GameObject.FindWithTag("UpgradesSpeaker").GetComponent<TextMeshProUGUI>();
         _HPUpgradeCost = GameObject.FindWithTag("HPUpgradeCost").GetComponent<TextMeshProUGUI>();
         _DamageUpgradeCost = GameObject.FindWithTag("DamageUpgradeCost").GetComponent<TextMeshProUGUI>();
@@ -63,9 +65,9 @@ public class Upgrades : MonoBehaviour
             _coins.coinsTakenByPlayer -= cost;
             _coins.RefresfCountOfCoins();
 
-            _unitStats.maxHealth += hpPerLevel;
-            _unitStats.health = Mathf.Min(_unitStats.health + hpPerLevel / 2, _unitStats.maxHealth);
-            _unitStats.RefreshPlayerHUD();
+            _health.MaxHealth += hpPerLevel;
+            //_health.CurrentHealth = Mathf.Min(_health.CurrentHealth + hpPerLevel / 2, _health.MaxHealth);
+            _playerGUI.RefreshPlayerHUDHealthBar(_health.CurrentHealth, _health.MaxHealth);
 
             currentHPLevel++;
 
@@ -97,8 +99,8 @@ public class Upgrades : MonoBehaviour
             _coins.coinsTakenByPlayer -= cost;
             _coins.RefresfCountOfCoins();
 
-            _unitStats.damage += damagePerLevel;
-            _unitStats.RefreshPlayerHUD();
+            _attacker.Damage += damagePerLevel;
+            _playerGUI.RefreshPlayerHUDDamage(_attacker.Damage);
 
             currentDamageLevel++;
 

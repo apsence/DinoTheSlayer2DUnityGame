@@ -1,0 +1,442 @@
+fileFormatVersion: 2
+guid: 5ff3db70ec2523546b3cdcc7a895a93b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7358203402649439589
+    second: Male001_No hair shadow-Mannequin_0
+  - first:
+      213: -8437492455658974718
+    second: Male001_No hair shadow-Mannequin_1
+  - first:
+      213: 2951382296682174906
+    second: Male001_No hair shadow-Mannequin_2
+  - first:
+      213: -9059752525890884156
+    second: Male001_No hair shadow-Mannequin_3
+  - first:
+      213: -4217430927152428705
+    second: Male001_No hair shadow-Mannequin_4
+  - first:
+      213: -3625931285492102553
+    second: Male001_No hair shadow-Mannequin_5
+  - first:
+      213: 6985689976000380355
+    second: Male001_No hair shadow-Mannequin_6
+  - first:
+      213: -5629956483038075118
+    second: Male001_No hair shadow-Mannequin_7
+  - first:
+      213: 8404222957552002431
+    second: Male001_No hair shadow-Mannequin_8
+  - first:
+      213: -2587979255115275909
+    second: Male001_No hair shadow-Mannequin_9
+  - first:
+      213: -6001105446720229992
+    second: Male001_No hair shadow-Mannequin_10
+  - first:
+      213: -1983598006125646348
+    second: Male001_No hair shadow-Mannequin_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 95
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b927200adf862e990800000000000000
+      internalID: -7358203402649439589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 95
+        width: 25
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2029869b05108ea80800000000000000
+      internalID: -8437492455658974718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_2
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 95
+        width: 24
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab91e1ecf8a65f820800000000000000
+      internalID: 2951382296682174906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_3
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 63
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4cd635d041b454280800000000000000
+      internalID: -9059752525890884156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_4
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 63
+        width: 19
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f59455aaaeca875c0800000000000000
+      internalID: -4217430927152428705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_5
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 63
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76a8444f4ba1eadc0800000000000000
+      internalID: -3625931285492102553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_6
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 31
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cd728a750822f060800000000000000
+      internalID: 6985689976000380355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_7
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 31
+        width: 19
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 217ab9f48606ed1b0800000000000000
+      internalID: -5629956483038075118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_8
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 31
+        width: 19
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f75e11e904cc1a470800000000000000
+      internalID: 8404222957552002431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_9
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 0
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7126c44496a51cd0800000000000000
+      internalID: -2587979255115275909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_10
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89d2494346ac7bca0800000000000000
+      internalID: -6001105446720229992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Male001_No hair shadow-Mannequin_11
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 0
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd25bb7f18d874e0800000000000000
+      internalID: -1983598006125646348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Male001_No hair shadow-Mannequin_0: -7358203402649439589
+      Male001_No hair shadow-Mannequin_1: -8437492455658974718
+      Male001_No hair shadow-Mannequin_10: -6001105446720229992
+      Male001_No hair shadow-Mannequin_11: -1983598006125646348
+      Male001_No hair shadow-Mannequin_2: 2951382296682174906
+      Male001_No hair shadow-Mannequin_3: -9059752525890884156
+      Male001_No hair shadow-Mannequin_4: -4217430927152428705
+      Male001_No hair shadow-Mannequin_5: -3625931285492102553
+      Male001_No hair shadow-Mannequin_6: 6985689976000380355
+      Male001_No hair shadow-Mannequin_7: -5629956483038075118
+      Male001_No hair shadow-Mannequin_8: 8404222957552002431
+      Male001_No hair shadow-Mannequin_9: -2587979255115275909
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

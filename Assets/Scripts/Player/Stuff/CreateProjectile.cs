@@ -21,12 +21,12 @@ public class CreatepProjectile : MonoBehaviour
             if (proj != null)
             {
                 // берём урон у игрока (родителя, где висит UnitStats)
-                UnitStats stats = GetComponentInParent<UnitStats>();
-                if (stats != null)
-                {
-                    proj.damage = stats.damage;
-                    proj.ownerTag = stats.gameObject.tag;
-                }
+                // UnitStats stats = GetComponentInParent<UnitStats>();
+                // if (stats != null)
+                // {
+                //     proj.damage = stats.damage;
+                //     proj.ownerTag = stats.gameObject.tag;
+                // }
             }
 
 

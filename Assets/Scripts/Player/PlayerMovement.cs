@@ -1,17 +1,15 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
     public float speedBoost;
-    public float speedMulriplier;
     private Animator _animator;
-    public Camera camera;
-    public float sprintMulriplier = 2f;
+    public float sprintMultiplier = 2f;
     public float sprintDuration = 0.4f;
     private bool _isSprinting = false;
-    private Scale _scale;
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody;
 
@@ -40,10 +38,8 @@ public class PlayerMovement : MonoBehaviour
         bool isMoving = Mathf.Abs(xMovement) > 0 || Mathf.Abs(yMovement) > 0;
         _animator.SetBool("isMoving", isMoving);
 
-        Vector2 movement = new Vector2(xMovement, yMovement).normalized * speedBoost * speedMulriplier;
-
-        _rigidbody.linearVelocity = movement; // физическое перемещение с учётом столкновений
-
+        Vector2 movement = new Vector2(xMovement, yMovement).normalized * speedBoost;
+        _rigidbody.linearVelocity = movement;
 
         // Спринт
         if (Input.GetKeyDown(KeyCode.Space) && !_isSprinting)
@@ -66,11 +62,11 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator Sprint(float sprintDuration)
     {
         _isSprinting = true;
-        speedBoost *= sprintMulriplier;
+        speedBoost *= sprintMultiplier;
 
         yield return new WaitForSeconds(sprintDuration);
 
-        speedBoost /= sprintMulriplier;
+        speedBoost /= sprintMultiplier;
         _isSprinting = false;
     }
 

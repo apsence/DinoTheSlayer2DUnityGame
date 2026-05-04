@@ -24,12 +24,12 @@ public class OnCollisionProjectile : MonoBehaviour
         if (ownerTag == "Enemy" && other.CompareTag("Enemy")) return;
         if (ownerTag == "Player" && other.CompareTag("Player")) return;
 
-        UnitStats stats = other.GetComponent<UnitStats>();
-        if (stats != null)
-        {
-            stats.TakeDamage(damage);
-            Destroy(gameObject);
-        }
+        // UnitStats stats = other.GetComponent<UnitStats>();
+        // if (stats != null)
+        // {
+        //     stats.TakeDamage(damage);
+        //     Destroy(gameObject);
+        // }
     }
 
     void DestroyOutOfBorderProjectile()

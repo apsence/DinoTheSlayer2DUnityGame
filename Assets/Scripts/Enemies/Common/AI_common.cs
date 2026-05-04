@@ -1,362 +1,194 @@
+//using System.Numerics;
+//using System.Numerics;
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class AI_common : MonoBehaviour
+public class AI_Common : MonoBehaviour
 {
-    [Header("Refs")]
-    public GameObject player;
-    public GameObject projectilePrefab;
-    public float projectileSpeed;
+    [Header("Атака")]
+    [SerializeField] private float agroRange;
+    [SerializeField] private float attackRange;
+    [SerializeField] private float maxDistanceToPlayer;
+    [SerializeField] private float _exitAttackRange;
 
-    [Header("Speeds & distances")]
-    public float normalSpeed = 3f;
-    public float slowSpeed = 1.5f;
-    public float safeDistance = 5f;       // зона осторожности
-    public float minSafeDistance = 2f;    // критическая близость
-    public float approachThreshold = 0.5f;
-    public float zoneOfAggression = 1750f;
+    [Header("Перемещение")]
+    [SerializeField] private float speed;
 
-    [Header("Attack")]
-    public float attackCooldown = 1f;
-
-    [Header("Arena")]
-    public LayerMask borderMask;          // слой для границ арены
-
-    [Header("Stuck check")]
-    public float stuckCheckInterval = 1f;
-
-    [Header("Debug")]
-    public bool enableDebug = true;
-    public float maxSpeed = 6f;
-
-    private Rigidbody2D rb;
-    private Rigidbody2D _playerRigidbody;
-    private Vector2 _moveDirection;
-    private float _moveSpeed;
-
-    private float _lastDistance;
-    private float _stuckTimer;
-
+    [Header("Патрулирование")]
+    private Vector2 _targetWanderPoint;
+    [SerializeField] private float wanderRadius = 2f;      // радиус случайного перемещения
+    [SerializeField] private float waitTimeAtPoint = 2f;   // время ожидания в точке
+    [SerializeField] private float minWanderTime = 3f;     // минимум до след. точки
+    [SerializeField] private float maxWanderTime = 6f;     // максимум до след. точки
+    [Header("Анимирование")]
+    [SerializeField] private UnitAnimator _unitAnimator;
+    private Transform _playerTransform;
+    private bool _isAttacking;
+    private bool _isMovingToWanderPoint;
+    private bool _isWaiting; 
+    private Vector2 _defaultPosition;
+    private SpriteRenderer _spriteRenderer;
+    private Rigidbody2D _rb;
+    private Attacker _attacker;
+    void Awake()
+    {
+        _playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        _defaultPosition = transform.position;
+        _rb = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _attacker = GetComponent<Attacker>();
+    }
     void Start()
     {
-
-        if (player == null)
-            player = GameObject.FindWithTag("Player");
-
-        rb = GetComponent<Rigidbody2D>();
-        _playerRigidbody = player.GetComponent<Rigidbody2D>();
-        _lastDistance = Vector2.Distance(transform.position, player.transform.position);
-
-        if (enableDebug)
-            Debug.Log($"[AI] Start: pos={transform.position}, playerPos={player.transform.position}, lastDist={_lastDistance}");
-
-        StartCoroutine(AttackRoutine(attackCooldown));
+        StartCoroutine(WanderRoutine());
     }
 
     void Update()
     {
-        HandleMovementLogic();
-        CheckIfStuckTooClose();
+        //UpdateAttackState();
     }
 
     void FixedUpdate()
     {
-        Move(_moveDirection, _moveSpeed);
-    }
-
-    // ---------------- Логика движения ----------------
-
-
-    public void AttackPlayer()
-    {
-        if (projectilePrefab == null || player == null)
+        float distance = DistanceToPlayer();
+        // Если игрок рядом - включаем режим атаки
+        if (distance < agroRange && !_isAttacking)
         {
-            Debug.LogWarning("[AI] AttackPlayer: нет префаба или игрока");
-            return;
+            _isAttacking = true;
+            StopWanderMovement(); // останавливаем блуждание
+        }
+        else if (distance > _exitAttackRange && _isAttacking)
+        {
+            _isAttacking = false;
+            StartCoroutine(WanderRoutine()); // перезапускаем блуждание
+            _unitAnimator.SetAttacking(false);
         }
 
-        // направление к игроку
-        Vector2 dirToPlayer = (player.transform.position - transform.position).normalized;
-
-        // точка спавна: чуть впереди ИИ, на offset
-        float spawnOffset = 100f; // расстояние от центра ИИ
-        Vector2 spawnPos = (Vector2)transform.position + dirToPlayer * spawnOffset;
-
-        // создаём объект префаба в позиции spawnPos
-        GameObject projectile = Instantiate(projectilePrefab, spawnPos, transform.rotation);
-
-        OnCollisionProjectile proj = projectile.GetComponent<OnCollisionProjectile>();
-        if (proj != null)
+        if (_isAttacking)
         {
-            proj.damage = GetComponent<UnitStats>().damage; // передаём урон врага
-            proj.ownerTag = gameObject.tag; // можно сохранить ссылку на владельца
+            bool shouldAttack = distance < attackRange;
+            _unitAnimator.SetAttacking(shouldAttack);
+
+            if (shouldAttack && Time.time >= _attacker.NextAttackTime)
+            {
+                _attacker.NextAttackTime = Time.time + _attacker.AttackColdown;
+                _attacker.Attack();
+            }
         }
-
-        float angle = Mathf.Atan2(dirToPlayer.y, dirToPlayer.x) * Mathf.Rad2Deg;
-        projectile.transform.rotation = Quaternion.AngleAxis(angle + 90f, Vector3.forward);
-
-        // если у префаба есть Rigidbody2D — задаём скорость
-        Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        
+        // Применяем движение
+        if (_isAttacking)
         {
-            rb.linearVelocity = dirToPlayer * projectileSpeed;
+            MoveToPlayer();
         }
-
-        if (enableDebug)
-            Debug.Log($"[AI] AttackPlayer: spawn={spawnPos}, dir={dirToPlayer}, speed={projectileSpeed}");
-    }
-
-    void HandleMovementLogic()
-    {
-        Vector2 direction = player.transform.position - transform.position;
-        float distance = direction.magnitude;
-
-        if (enableDebug)
-            Debug.Log($"[AI] HandleMovement: distance={distance:F2}, safe={safeDistance}, minSafe={minSafeDistance}");
-
-        if (distance > safeDistance)
+        else if (_isMovingToWanderPoint)
         {
-            if (enableDebug)
-                Debug.Log("[AI] State: CHASE (player far)");
-            MoveTowardsPlayer(direction);
-        }
-        else if (distance > minSafeDistance)
-        {
-            if (enableDebug)
-                Debug.Log("[AI] State: WANDER (near but not critical)");
-            WanderNearPlayer(direction);
+            MoveToWanderPoint();
         }
         else
         {
-            if (enableDebug)
-                Debug.Log("[AI] State: RETREAT (too close)");
-            RetreatFromPlayer(direction);
+            _rb.linearVelocity = Vector2.zero;
         }
     }
 
-    void MoveTowardsPlayer(Vector2 direction)
+    private void MoveToWanderPoint()
     {
-        Vector2 targetPoint = player.transform.position;
-        _moveDirection = SafeNormalize(direction);
-        _moveSpeed = normalSpeed;
-
-        if (enableDebug)
-            Debug.Log($"[AI] CHASE: target={targetPoint}, dist={Vector2.Distance(transform.position, targetPoint):F2}, dir={_moveDirection}, speed={_moveSpeed}");
-    }
-
-    // Блуждание рядом с игроком: точки только "от игрока"
-    void WanderNearPlayer(Vector2 direction)
-    {
-        bool approaching = IsPlayerApproaching(_playerRigidbody.linearVelocity, direction);
-        Vector2 selfPos = (Vector2)transform.position;
-        Vector2 dirToPlayer = SafeNormalize(direction);
-        Vector2 away = -dirToPlayer;
-
-        if (approaching)
+        Vector2 direction = (_targetWanderPoint - (Vector2)transform.position).normalized;
+        
+        // Обновляем направление спрайта
+        UpdateSpriteDirection(direction.x);
+        
+        _rb.linearVelocity = direction * speed;
+        
+        // Если достигли точки
+        if (Vector2.Distance(transform.position, _targetWanderPoint) < 0.1f)
         {
-            Vector2 targetPoint = selfPos + away * safeDistance * 0.8f;
-            _moveDirection = SafeNormalize(targetPoint - selfPos);
-            _moveSpeed = Mathf.Min(slowSpeed * 1.5f, normalSpeed);
-
-            if (enableDebug)
-                Debug.Log($"[AI] WANDER->RETREATISH: target={targetPoint}, dist={Vector2.Distance(selfPos, targetPoint):F2}, dir={_moveDirection}, speed={_moveSpeed}, reason=playerApproaching");
+            _rb.linearVelocity = Vector2.zero;
+            _isMovingToWanderPoint = false;
+            StartCoroutine(WaitAtPoint());
         }
-        else
+    }
+    
+    // ⏰ Корутина блуждания (выбирает случайные точки)
+    private System.Collections.IEnumerator WanderRoutine()
+    {
+        while (!_isAttacking) // пока не атакуем
         {
-            // выбираем случайную точку в полукруге "от игрока"
-            Vector2 randomOffset = Quaternion.Euler(0, 0, Random.Range(-90f, 90f)) * away;
-            Vector2 targetPoint = selfPos + randomOffset * safeDistance;
-
-            // фильтруем: точка не должна быть ближе к игроку
-            if (Vector2.Distance(targetPoint, player.transform.position) < Vector2.Distance(selfPos, player.transform.position))
+            // Ждём случайное время перед выбором новой точки
+            float waitTime = UnityEngine.Random.Range(minWanderTime, maxWanderTime);
+            yield return new WaitForSeconds(waitTime);
+            
+            if (!_isAttacking && !_isWaiting)
             {
-                targetPoint = selfPos + away * safeDistance; // fallback
+                // Выбираем случайную точку вокруг дефолтной позиции
+                _targetWanderPoint = _defaultPosition + UnityEngine.Random.insideUnitCircle * wanderRadius;
+                _isMovingToWanderPoint = true;
             }
-
-            _moveDirection = SafeNormalize(targetPoint - selfPos);
-            _moveSpeed = slowSpeed;
-
-            if (enableDebug)
-                Debug.Log($"[AI] WANDER->ROAM: target={targetPoint}, dist={Vector2.Distance(selfPos, targetPoint):F2}, dir={_moveDirection}, speed={_moveSpeed}, reason=random away");
         }
     }
-
-
-
-    // Отступление: точка позади себя
-    void RetreatFromPlayer(Vector2 direction)
+    
+    // ⏸ Ожидание в точке (чтобы не дрожал)
+    private System.Collections.IEnumerator WaitAtPoint()
     {
-        Vector2 selfPos = (Vector2)transform.position;
-        Vector2 currentDir = _moveDirection.sqrMagnitude > 0.01f ? _moveDirection : (Vector2)transform.up;
-
-        Vector2 retreatDir = SafeNormalize(-currentDir);
-        Vector2 sideStep = Vector2.Perpendicular(retreatDir) * Random.Range(-0.3f, 0.3f);
-        Vector2 finalDir = SafeNormalize(retreatDir + sideStep);
-
-        Vector2 targetPoint = selfPos + finalDir * minSafeDistance;
-
-        if (!IsDirectionFree(finalDir, normalSpeed))
-        {
-            finalDir = ChooseAlternativeDirection(finalDir, normalSpeed);
-            targetPoint = selfPos + finalDir * minSafeDistance;
-        }
-
-        _moveDirection = finalDir;
-        _moveSpeed = Mathf.Min(normalSpeed, maxSpeed);
-
-        if (enableDebug)
-            Debug.Log($"[AI] RETREAT: target={targetPoint}, dist={Vector2.Distance(selfPos, targetPoint):F2}, dir={_moveDirection}, speed={_moveSpeed}, reason=too close");
+        _isWaiting = true;
+        yield return new WaitForSeconds(waitTimeAtPoint);
+        _isWaiting = false;
     }
 
-    // ---------------- Проверка "застревания" ----------------
-
-    void CheckIfStuckTooClose()
+    private void StopWanderMovement()
     {
-        float currentDistance = Vector2.Distance(transform.position, player.transform.position);
-        _stuckTimer += Time.deltaTime;
-
-        if (enableDebug)
-            Debug.Log($"[AI] StuckCheck: timer={_stuckTimer:F2}/{stuckCheckInterval}, currDist={currentDistance:F2}, lastDist={_lastDistance:F2}");
-
-        if (_stuckTimer >= stuckCheckInterval)
-        {
-            bool nearCrit = currentDistance < minSafeDistance;
-            bool noProgress = Mathf.Abs(currentDistance - _lastDistance) < 0.1f;
-
-            if (enableDebug)
-                Debug.Log($"[AI] StuckCheck eval: nearCrit={nearCrit}, noProgress={noProgress}");
-
-            if (noProgress && nearCrit)
-            {
-                FindNewPointBehindSelf();
-            }
-
-
-            _lastDistance = currentDistance;
-            _stuckTimer = 0f;
-        }
+        _isMovingToWanderPoint = false;
+        _isWaiting = false;
+        StopAllCoroutines(); // останавливаем все корутины
+        
+        // Мгновенно останавливаем физику
+        _rb.linearVelocity = Vector2.zero;
     }
 
-    void FindNewPointBehindSelf()
+    float DistanceToPlayer()
     {
-        // Берём текущее направление движения или "вперёд" объекта
-        Vector2 currentDir = _moveDirection.sqrMagnitude > 0.01f
-            ? _moveDirection
-            : (Vector2)transform.up;
-
-        // Точка позади ИИ
-        Vector2 retreatDir = -currentDir.normalized;
-
-        // Добавляем небольшой боковой разброс
-        retreatDir += Random.insideUnitCircle * 0.5f;
-
-        _moveDirection = SafeNormalize(retreatDir);
-        _moveSpeed = normalSpeed;
-
-        if (enableDebug)
-            Debug.Log($"[AI] FindNewPointBehindSelf: retreatDir={retreatDir}, finalDir={_moveDirection}, speed={_moveSpeed}");
+        float distance = Vector2.Distance( _playerTransform.position, transform.position);
+        //float positiveDistance = Math.Abs(distance);
+        return distance;
     }
 
+    // Vector2 DirectionToPlayer()
+    // {
+    //     return (_playerTransform.position - transform.position).normalized;
+    // }
 
-    // ---------------- Вспомогательные методы ----------------
-
-
-    void Move(Vector2 direction, float speed)
+    Vector2 DirectionToDefaultPosition()
     {
-        if (speed <= 0f || direction == Vector2.zero)
-        {
-            rb.linearVelocity = Vector2.zero;
-            if (enableDebug)
-                Debug.Log($"[AI] Move: STOP (dir={direction}, speed={speed})");
+        return ((Vector2)transform.position - _defaultPosition).normalized;
+    }
+
+    void MoveToPlayer()
+    {
+        Vector2 direction = ((Vector2)_playerTransform.position - (Vector2)transform.position).normalized;
+        UpdateSpriteDirection(direction.x);
+        if(DistanceToPlayer() < maxDistanceToPlayer) {
+            _rb.linearVelocity = Vector2.zero;
             return;
         }
-
-        float clamped = Mathf.Min(speed, maxSpeed);
-        Vector2 safeDir = SafeNormalize(direction);
-        rb.linearVelocity = safeDir * clamped;
-
-        if (enableDebug)
-            Debug.Log($"[AI] Move: vel={rb.linearVelocity}, dir={safeDir}, speed={clamped}");
+        _rb.linearVelocity = direction * speed;
     }
 
-
-    Vector2 ChooseAlternativeDirection(Vector2 currentDir, float speed)
+    private void UpdateSpriteDirection(float directionX)
     {
-        Vector2 dirA = SafeNormalize(Vector2.Perpendicular(currentDir));
-        Vector2 dirB = -dirA;
-
-        bool freeA = IsDirectionFree(dirA, speed);
-        bool freeB = IsDirectionFree(dirB, speed);
-
-        if (enableDebug)
-            Debug.Log($"[AI] ChooseAlt: current={currentDir}, dirA={dirA}, freeA={freeA}, dirB={dirB}, freeB={freeB}");
-
-        if (freeA) return dirA;
-        if (freeB) return dirB;
-
-        Vector2 fallback = -currentDir;
-
-        if (enableDebug)
-            Debug.Log($"[AI] ChooseAlt: fallback={fallback}");
-        return fallback;
+        if (directionX < 0)
+            _spriteRenderer.flipX = true;
+        else if (directionX > 0)
+            _spriteRenderer.flipX = false;
     }
 
-    // Проверка свободного направления: учитываем и границы, и игрока
-    bool IsDirectionFree(Vector2 direction, float speed)
-    {
-        float radius = 0.5f;
-        float distance = speed * Time.fixedDeltaTime;
-
-        // проверяем столкновения с границами и игроком
-        int mask = borderMask | LayerMask.GetMask("Player");
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, radius, direction, distance, mask);
-        bool free = hit.collider == null;
-
-
-        if (enableDebug)
-            Debug.Log($"[AI] Raycast: dir={direction}, dist={distance:F3}, radius={radius}, free={free}, hit={(hit.collider ? hit.collider.name : "none")}");
-
-        return free;
-    }
-
-
-
-    Vector2 SafeNormalize(Vector2 v)
-    {
-        if (v.sqrMagnitude > 0.0001f) return v.normalized;
-        return Vector2.zero;
-    }
-
-    bool IsPlayerApproaching(Vector2 playerVelocity, Vector2 directionToAI)
-    {
-        if (playerVelocity.sqrMagnitude < 0.0001f)
-        {
-            if (enableDebug)
-                Debug.Log("[AI] Approaching: player stationary => false");
-            return false;
-        }
-
-        Vector2 safeVel = playerVelocity.normalized;
-        float dot = Vector2.Dot(safeVel, SafeNormalize(directionToAI));
-        bool approaching = dot > approachThreshold;
-
-        if (enableDebug)
-            Debug.Log($"[AI] Approaching: dot={dot:F3}, threshold={approachThreshold}, result={approaching}");
-
-        return approaching;
-    }
-
-    IEnumerator AttackRoutine(float interval)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(interval);
-
-            float distance = Vector2.Distance(transform.position, player.transform.position);
-            if (distance < zoneOfAggression) // атакуем только если игрок рядом
-            {
-                AttackPlayer();
-            }
-        }
-    }
+    // public void OnAttackFrame()
+    // {
+    //     float distance = DistanceToPlayer();
+    //     if (distance < attackRange)
+    //     {
+    //         _attacker.Attack();
+    //     }
+    // }
 }

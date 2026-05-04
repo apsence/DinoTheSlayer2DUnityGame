@@ -41,9 +41,9 @@ public class ClearAndResetGame : MonoBehaviour
     {
         if (_player != null)
         {
-            UnitStats stats = _player.GetComponent<UnitStats>();
-            stats.health = stats.maxHealth;
-            stats.RefreshPlayerHUD();
+            //UnitStats stats = _player.GetComponent<UnitStats>();
+            //stats.health = stats.maxHealth;
+            //stats.RefreshPlayerHUD();
             RefreshPlayerStatsAndUpgrades();
             _player.transform.position = Vector2.zero;
             _player.SetActive(true);
@@ -155,17 +155,17 @@ public class ClearAndResetGame : MonoBehaviour
 
     void RefreshPlayerStatsAndUpgrades()
     {
-        UnitStats _playerStats = _player.GetComponent<UnitStats>();
+        // UnitStats _playerStats = _player.GetComponent<UnitStats>();
 
-        _playerStats.health = _playerStats.defaultMaxHP;
-        _playerStats.maxHealth = _playerStats.defaultMaxHP;
+        // _playerStats.health = _playerStats.defaultMaxHP;
+        // _playerStats.maxHealth = _playerStats.defaultMaxHP;
 
-        _playerStats.damage = _playerStats.defaultDamage;
-        _playerStats.RefreshPlayerHUD();
+        // _playerStats.damage = _playerStats.defaultDamage;
+        // _playerStats.RefreshPlayerHUD();
 
-        Coin _playerCoins = _player.GetComponent<Coin>();
-        _playerCoins.coinsTakenByPlayer = 0;
-        _playerCoins.RefresfCountOfCoins();
+        // Coin _playerCoins = _player.GetComponent<Coin>();
+        // _playerCoins.coinsTakenByPlayer = 0;
+        // _playerCoins.RefresfCountOfCoins();
 
 
 
@@ -183,11 +183,11 @@ public class ClearAndResetGame : MonoBehaviour
 
     void DestroyAllObjects()
     {
-        AI_common[] list = FindObjectsByType<AI_common>(FindObjectsSortMode.None);
-        foreach (AI_common ai in list)
-        {
-            Destroy(ai.gameObject);
-        }
+        //AI_common[] list = FindObjectsByType<AI_common>(FindObjectsSortMode.None);
+        //foreach (AI_common ai in list)
+        //{
+        //    Destroy(ai.gameObject);
+        //}
         Collectables[] collectables = FindObjectsByType<Collectables>(FindObjectsSortMode.None);
         foreach (Collectables col in collectables)
         {

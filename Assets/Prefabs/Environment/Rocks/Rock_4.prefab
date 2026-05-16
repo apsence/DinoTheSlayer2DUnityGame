@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9077561687169290210}
   - component: {fileID: 5765782683188991775}
+  - component: {fileID: 8664883625866042323}
   m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1238841445
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 50ba275dcd62e47b0b07e37b43a997fa, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0.50980395}
@@ -90,6 +91,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8664883625866042323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2923989324951569809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSort
 --- !u!1 &4207918791882460874
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +172,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0014648438, y: -0.01977539}
+  m_Offset: {x: 0.0014648438, y: -0.014160156}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -169,7 +182,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.84472656, y: 0.6401367}
+  m_Size: {x: 0.7998047, y: 0.62890625}
   m_EdgeRadius: 0
 --- !u!50 &994711422014651103
 Rigidbody2D:
@@ -208,6 +221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8683300062364268205}
   - component: {fileID: 190140187189975293}
+  - component: {fileID: 5782314127959457572}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -274,8 +288,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1238841445
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 50ba275dcd62e47b0b07e37b43a997fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -288,3 +302,15 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5782314127959457572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7574821025710099930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSort

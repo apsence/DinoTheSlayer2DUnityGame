@@ -12,11 +12,11 @@ public class ClearAndResetGame : MonoBehaviour
     public Image fadeImage;
     public bool isGameEnd = false;
 
-    private LevelManager _levelManager;
+    //private LevelManager _levelManager;
     private PauseManager _pauseManager;
     private GameObject _player;
     private bool _gameCompleted;
-    private SpawnCoins _spawnCoins;
+    //private SpawnCoins _spawnCoins;
     private Upgrades _upgrades;
     private TextMeshProUGUI _hpUpgradeCostMesh;
     private TextMeshProUGUI _damageUpgradeCostMesh;
@@ -26,9 +26,9 @@ public class ClearAndResetGame : MonoBehaviour
     void Awake()
     {
         _pauseManager = FindAnyObjectByType<PauseManager>();
-        _levelManager = FindAnyObjectByType<LevelManager>();
+        //_levelManager = FindAnyObjectByType<LevelManager>();
         _player = GameObject.FindWithTag("Player");
-        _spawnCoins = FindAnyObjectByType<SpawnCoins>();
+        //_spawnCoins = FindAnyObjectByType<SpawnCoins>();
 
         _upgrades = FindAnyObjectByType<Upgrades>();
         _hpUpgradeCostMesh = GameObject.FindWithTag("HPUpgradeCost").GetComponent<TextMeshProUGUI>();
@@ -49,7 +49,7 @@ public class ClearAndResetGame : MonoBehaviour
             _player.SetActive(true);
         }
 
-        _levelManager.currentWave = 0;
+        //_levelManager.currentWave = 0;
         isGameEnd = false;
 
         Color c = fadeImage.color;
@@ -58,8 +58,8 @@ public class ClearAndResetGame : MonoBehaviour
 
         _pauseManager.Resume();
         StartCoroutine(FadeInCoroutine());
-        _levelManager.RestartGame();
-        _spawnCoins.RestartGame();
+        //_levelManager.RestartGame();
+        //_spawnCoins.RestartGame();
     }
 
     public void OnClick()

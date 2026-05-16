@@ -1,12 +1,14 @@
 
 Logs/
-
+Temp/
+Library/
+UserSettings/
 .vscode/
 
+
 *.csproj
-
-Library/
-
-UserSettings/
-
 *.slnx
+
+
+
+*.lscache

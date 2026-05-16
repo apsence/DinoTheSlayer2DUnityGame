@@ -19,7 +19,7 @@ public class Health : MonoBehaviour, IDamageable
     private bool _isDead;
     
     public int CurrentHealth => _currentHealth;
-    public int MaxHealth {get {return MaxHealth; } set{_maxHealth = value; }}
+    public int MaxHealth {get {return _maxHealth; } set{_maxHealth = value; }}
     public bool IsAlive => !_isDead && _currentHealth > 0;
     public Transform Transform => transform;
     

@@ -1,5 +1,3 @@
-//using System.Numerics;
-//using System.Numerics;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -43,11 +41,6 @@ public class AI_Common : MonoBehaviour
     void Start()
     {
         StartCoroutine(WanderRoutine());
-    }
-
-    void Update()
-    {
-        //UpdateAttackState();
     }
 
     void FixedUpdate()
@@ -112,7 +105,7 @@ public class AI_Common : MonoBehaviour
     }
     
     // ⏰ Корутина блуждания (выбирает случайные точки)
-    private System.Collections.IEnumerator WanderRoutine()
+    private IEnumerator WanderRoutine()
     {
         while (!_isAttacking) // пока не атакуем
         {
@@ -130,7 +123,7 @@ public class AI_Common : MonoBehaviour
     }
     
     // ⏸ Ожидание в точке (чтобы не дрожал)
-    private System.Collections.IEnumerator WaitAtPoint()
+    private IEnumerator WaitAtPoint()
     {
         _isWaiting = true;
         yield return new WaitForSeconds(waitTimeAtPoint);
@@ -153,11 +146,6 @@ public class AI_Common : MonoBehaviour
         //float positiveDistance = Math.Abs(distance);
         return distance;
     }
-
-    // Vector2 DirectionToPlayer()
-    // {
-    //     return (_playerTransform.position - transform.position).normalized;
-    // }
 
     Vector2 DirectionToDefaultPosition()
     {
@@ -183,12 +171,4 @@ public class AI_Common : MonoBehaviour
             _spriteRenderer.flipX = false;
     }
 
-    // public void OnAttackFrame()
-    // {
-    //     float distance = DistanceToPlayer();
-    //     if (distance < attackRange)
-    //     {
-    //         _attacker.Attack();
-    //     }
-    // }
 }

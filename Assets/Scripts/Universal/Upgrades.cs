@@ -60,10 +60,10 @@ public class Upgrades : MonoBehaviour
         BlockHPUpgrade();
 
         int cost = costOfUpgradeHP[currentHPLevel];
-        if (_coins.coinsTakenByPlayer >= cost)
-        {
-            _coins.coinsTakenByPlayer -= cost;
-            _coins.RefresfCountOfCoins();
+        //if (_coins.coinsTakenByPlayer >= cost)
+        //{
+           // _coins.coinsTakenByPlayer -= cost;
+           // _coins.RefresfCountOfCoins();
 
             _health.MaxHealth += hpPerLevel;
             //_health.CurrentHealth = Mathf.Min(_health.CurrentHealth + hpPerLevel / 2, _health.MaxHealth);
@@ -82,11 +82,11 @@ public class Upgrades : MonoBehaviour
 
             RefreshHPCost();
             BlockHPUpgrade();
-        }
-        else
-        {
+        //}
+        //else
+        //{
             _speaker.AddCoroutine(ShowMessageFromUpgradesSpeaker("Not enough gold"));
-        }
+        //}
     }
 
     public void UpgradeDamage()
@@ -94,10 +94,10 @@ public class Upgrades : MonoBehaviour
         BlockDamageUpgrade();
 
         int cost = costOfUpgradeDamage[currentDamageLevel];
-        if (_coins.coinsTakenByPlayer >= cost)
-        {
-            _coins.coinsTakenByPlayer -= cost;
-            _coins.RefresfCountOfCoins();
+        //if (_coins.coinsTakenByPlayer >= cost)
+        //{
+            //_coins.coinsTakenByPlayer -= cost;
+            //_coins.RefresfCountOfCoins();
 
             _attacker.Damage += damagePerLevel;
             _playerGUI.RefreshPlayerHUDDamage(_attacker.Damage);
@@ -114,11 +114,11 @@ public class Upgrades : MonoBehaviour
             }
             RefreshDamageCost();
             BlockDamageUpgrade();
-        }
-        else
-        {
-            _speaker.AddCoroutine(ShowMessageFromUpgradesSpeaker("Not enough gold"));
-        }
+        //}
+        //else
+        //{
+           // _speaker.AddCoroutine(ShowMessageFromUpgradesSpeaker("Not enough gold"));
+        //}
     }
 
     // ---------------Прокачка---------------

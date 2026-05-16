@@ -4,9 +4,10 @@ using TMPro;
 
 public class PlayerGUI : MonoBehaviour
 {
-    public Image healthBar;
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI damageText;
+    [SerializeField] private Image healthBar;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI damageText;
+    [SerializeField] private TextMeshProUGUI coinsText;
 
 
     public void RefreshPlayerHUDHealthBar(int _current, int _max)
@@ -29,6 +30,14 @@ public class PlayerGUI : MonoBehaviour
         if (damageText != null)
         {
             damageText.text = $"{damage}";
+        }
+    }
+
+    public void RefreshPlayerHUDCoins(int count)
+    {
+        if(coinsText != null)
+        {
+            coinsText.text = $"{count}";
         }
     }
 }

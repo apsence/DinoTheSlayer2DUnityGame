@@ -25,10 +25,10 @@ TagManager:
   - 
   - Water
   - UI
-  - BorderLayer
   - Player
-  - Enemy
-  - 
+  - Chest
+  - Environment
+  - Shadows
   - 
   - 
   - 
@@ -54,6 +54,18 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Shadows
+    uniqueID: 1930363227
+    locked: 0
+  - name: Collectibles
+    uniqueID: 2669614419
+    locked: 0
+  - name: Player
+    uniqueID: 1316289195
+    locked: 0
+  - name: Envitonment
+    uniqueID: 3687840195
     locked: 0
   m_RenderingLayers:
   - Default

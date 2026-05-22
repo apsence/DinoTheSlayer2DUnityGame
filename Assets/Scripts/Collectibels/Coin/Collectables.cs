@@ -4,21 +4,36 @@ using UnityEngine;
 
 public class Collectables : MonoBehaviour
 {
-    private Coin _coin;
-    private PlayerGUI _playerGUI;
-    void Awake()
-    {
-        _coin = FindAnyObjectByType<Coin>();
-        _playerGUI = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerGUI>();
-    }
+    [Header("Характеристики монеты")]
+    [SerializeField] private int monetsAdd;
+
+    [Header("Характеристики зелья")]
+    [SerializeField] private int hpRestore;
+
+    [Header("Тип лута")]
+    [SerializeField] private LootType lootType;
+
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
+        if (!collision.CompareTag("Player"))
+            return;
+
+        switch (lootType)
         {
-            Destroy(gameObject);
-            _coin.coinsCount += 1;
-            _playerGUI.RefreshPlayerHUDCoins(_coin.coinsCount);
+            case LootType.Coin:
+                Coin coin = collision.GetComponent<Coin>();
+                coin.ChangeCoinsCount( + monetsAdd);
+
+                break;
+
+            case LootType.HealthPotion:
+                Health health = collision.GetComponent<Health>();
+                health.Heal(hpRestore);
+
+                break;
         }
+
+        Destroy(gameObject);
     }
 }

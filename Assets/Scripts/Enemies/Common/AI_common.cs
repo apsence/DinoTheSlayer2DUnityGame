@@ -22,6 +22,8 @@ public class AI_Common : MonoBehaviour
     [SerializeField] private float maxWanderTime = 6f;     // максимум до след. точки
     [Header("Анимирование")]
     [SerializeField] private UnitAnimator _unitAnimator;
+
+    [SerializeField] private LayerMask _targetLayers = -1;
     private Transform _playerTransform;
     private bool _isAttacking;
     private bool _isMovingToWanderPoint;
@@ -30,6 +32,10 @@ public class AI_Common : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb;
     private Attacker _attacker;
+    private Coroutine _wanderCoroutine;
+    private IDamageable _currentTarget;
+
+    public bool HasTarget => _currentTarget != null && _currentTarget.IsAlive;
     void Awake()
     {
         _playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
@@ -40,7 +46,12 @@ public class AI_Common : MonoBehaviour
     }
     void Start()
     {
-        StartCoroutine(WanderRoutine());
+        _wanderCoroutine = StartCoroutine(WanderRoutine());
+    }
+
+    void Update()
+    {
+        FindNearestTarget();
     }
 
     void FixedUpdate()
@@ -67,7 +78,7 @@ public class AI_Common : MonoBehaviour
             if (shouldAttack && Time.time >= _attacker.NextAttackTime)
             {
                 _attacker.NextAttackTime = Time.time + _attacker.AttackColdown;
-                _attacker.Attack();
+                Attack();
             }
         }
         
@@ -134,7 +145,7 @@ public class AI_Common : MonoBehaviour
     {
         _isMovingToWanderPoint = false;
         _isWaiting = false;
-        StopAllCoroutines(); // останавливаем все корутины
+        StopCoroutine(_wanderCoroutine); // останавливаем все корутины
         
         // Мгновенно останавливаем физику
         _rb.linearVelocity = Vector2.zero;
@@ -143,13 +154,7 @@ public class AI_Common : MonoBehaviour
     float DistanceToPlayer()
     {
         float distance = Vector2.Distance( _playerTransform.position, transform.position);
-        //float positiveDistance = Math.Abs(distance);
         return distance;
-    }
-
-    Vector2 DirectionToDefaultPosition()
-    {
-        return ((Vector2)transform.position - _defaultPosition).normalized;
     }
 
     void MoveToPlayer()
@@ -169,6 +174,68 @@ public class AI_Common : MonoBehaviour
             _spriteRenderer.flipX = true;
         else if (directionX > 0)
             _spriteRenderer.flipX = false;
+    }
+
+    //* ---Таргеты---
+        private void FindNearestTarget()
+    {
+        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _attacker.AttackRange, _targetLayers);
+        
+        float closestDistance = _attacker.AttackRange;
+        IDamageable closestTarget = null;
+        
+        foreach (var target in targets)
+        {
+            var damageable = target.GetComponent<IDamageable>();
+            if (damageable != null && damageable.IsAlive && damageable.Transform != transform)
+            {
+                float distance = Vector2.Distance(transform.position, damageable.Transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTarget = damageable;
+                }
+            }
+        }
+        
+        _currentTarget = closestTarget;
+    }
+    
+    public void PerformAttack(IDamageable target)
+    {
+        
+        float distance = Vector2.Distance(transform.position, target.Transform.position);
+        if (distance > _attacker.AttackRange) return;
+        
+        Debug.LogWarning($"💥 ATTACKING from {name} (ID: {GetInstanceID()})");
+        target.TakeDamage(_attacker.Damage, _attacker.MinDamage, _attacker.MaxDamage);
+        
+        _attacker.LastAttackTime = Time.time;
+    }
+
+    public void Attack()
+    {
+        AttackCurrentTarget();
+    }
+    
+    // Атака по текущему найденному
+    public void AttackCurrentTarget()
+    {
+        Debug.Log($"AttackCurrentTarget() called! _currentTarget = {_currentTarget}");
+        PerformAttack(_currentTarget);
+    }
+    
+    // Атака по конкретному объекту
+    public void AttackTarget(GameObject target)
+    {
+        var damageable = target.GetComponent<IDamageable>();
+        PerformAttack(damageable);
+    }
+    
+    // Ручная установка цели
+    public void SetTarget(IDamageable target)
+    {
+        _currentTarget = target;
     }
 
 }

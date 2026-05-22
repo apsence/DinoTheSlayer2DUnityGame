@@ -5,27 +5,25 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour, IDamageable
 {
     [Header("Здоровье")]
-    [SerializeField] private int _maxHealth = 100;
-    
-    [Header("События")]
-    public UnityEvent<int> OnDamageTaken;      // (finalDamage)
-    public UnityEvent<int> OnHealthChanged;     // (currentHealth)
-    public UnityEvent OnDeath;
-    public UnityEvent OnHeal;
+    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int currentHealth;
 
     [Header("GUI")]
     [SerializeField] private PlayerGUI _playerGUI;
-    private int _currentHealth;
+
+    [Header("---НЕ ИГРОК---")]
+    [Header("Ссылки")]
+    [SerializeField] private CreaterOfRewards createrOfRewards;
+
     private bool _isDead;
-    
-    public int CurrentHealth => _currentHealth;
-    public int MaxHealth {get {return _maxHealth; } set{_maxHealth = value; }}
-    public bool IsAlive => !_isDead && _currentHealth > 0;
+    public int MaxHealth {get;}
+    public bool IsAlive => !_isDead && currentHealth > 0;
     public Transform Transform => transform;
+    public int CurrentHealth => currentHealth;
     
     void Start()
     {
-        _currentHealth = _maxHealth;
+        currentHealth = maxHealth;
         _isDead = false;
     }
     
@@ -37,18 +35,12 @@ public class Health : MonoBehaviour, IDamageable
         int finalDamage = amount + Random.Range(_minDamage, _maxDamage + 1);
         finalDamage = Mathf.Max(1, finalDamage); // Минимум 1 урон
         
-        _currentHealth -= finalDamage;
-        _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+        currentHealth -= finalDamage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
-        // События
-        OnDamageTaken?.Invoke(finalDamage);
-        OnHealthChanged?.Invoke(_currentHealth);
-        
-        Debug.Log($"{name} получил {finalDamage} урона. Осталось здоровья: {_currentHealth}");
-        
-        if(gameObject.CompareTag("Player")) _playerGUI.RefreshPlayerHUDHealthBar(_currentHealth, _maxHealth);
+        if(gameObject.CompareTag("Player")) _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);
 
-        if (_currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -58,14 +50,14 @@ public class Health : MonoBehaviour, IDamageable
     public void Heal(int amount)
     {
         if (_isDead) return;
+        if(currentHealth == MaxHealth) return;
         
-        _currentHealth += amount;
-        _currentHealth = Mathf.Clamp(_currentHealth, 0, _maxHealth);
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
-        OnHealthChanged?.Invoke(_currentHealth);
-        OnHeal?.Invoke();
-        
-        Debug.Log($"{name} вылечен на {amount}. Здоровья: {_currentHealth}");
+        _playerGUI.RefreshPlayerHUDHealthBar(
+        currentHealth,
+        MaxHealth);
     }
     
     private void Die()
@@ -73,19 +65,19 @@ public class Health : MonoBehaviour, IDamageable
         if (_isDead) return;
         
         _isDead = true;
-        OnDeath?.Invoke();
         
-        Debug.Log($"{name} умер!");
-        
-        // Отключаем компоненты при смерти
-        var rb = GetComponent<Rigidbody2D>();
-        if (rb != null) rb.linearVelocity = Vector2.zero;
-        
-        var collider = GetComponent<Collider2D>();
-        if (collider != null) collider.enabled = false;
-        
-        // Активируем анимацию смерти
-        var animator = GetComponent<UnitAnimator>();
-        if (animator != null) animator.Die();
+        createrOfRewards.CreateReward(transform.position);
+        Destroy(gameObject);        
+    }
+
+    public void UpgradeMaxHealth(int amount, int healBonus)
+    {
+        maxHealth += amount;
+
+        currentHealth = Mathf.Min(currentHealth + healBonus, maxHealth);
+
+        _playerGUI.RefreshPlayerHUDHealthBar(
+        currentHealth,
+        MaxHealth);
     }
 }

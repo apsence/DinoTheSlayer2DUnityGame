@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2061013455456590618}
   - component: {fileID: 827761449929234798}
   - component: {fileID: 6925120875640618284}
+  - component: {fileID: 2117483300138849276}
   - component: {fileID: 6791301222794203930}
   m_Layer: 0
   m_Name: Chest_1
@@ -205,8 +206,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChestCollect
   playerTransform: {fileID: 0}
   collectRange: 3
-  _createCoin: {fileID: 0}
-  coinsInside: 0
+  createrOfRewards: {fileID: 0}
+  secondsBeforeSpawnLoot: 1
+--- !u!114 &2117483300138849276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317315119158323595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df434ce77a0a482408e24011e21a42ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreaterOfRewards
+  loot: []
+  itemSpawner: {fileID: 0}
   spreadRadius: 0
   yOffSet: 0
 --- !u!114 &6791301222794203930

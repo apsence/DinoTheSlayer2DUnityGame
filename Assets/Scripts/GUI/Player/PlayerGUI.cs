@@ -8,7 +8,33 @@ public class PlayerGUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI damageText;
     [SerializeField] private TextMeshProUGUI coinsText;
+    [SerializeField] private TextMeshProUGUI hpUpgradeCostText;
+    [SerializeField] private TextMeshProUGUI damageUpgradeCostText;
+    [SerializeField] private TextMeshProUGUI hpHotKey;
+    [SerializeField] private TextMeshProUGUI damageHotKey;
+    [SerializeField] private Image upgradeHPImage;
+    [SerializeField] private Image upgradeDamageImage;
+    [SerializeField] private Image heart;
+    [SerializeField] private Image sword;
+    [SerializeField] private Image hpGreenTick;
+    [SerializeField] private Image damageGreenTick;
+    [SerializeField] private Button hpUpgradeButton;
+    [SerializeField] private Button damageUpgradeButton;
 
+    private Attacker _attacker;
+    private Health _health;
+
+    void Awake()
+    {
+        _attacker = GameObject.FindGameObjectWithTag("Player").GetComponent<Attacker>();
+        _health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+    }
+
+    void Start()
+    {
+        RefreshPlayerHUDDamage(_attacker.Damage);
+        RefreshPlayerHUDHealthBar(_health.CurrentHealth, _health.MaxHealth);
+    }
 
     public void RefreshPlayerHUDHealthBar(int _current, int _max)
     {
@@ -39,5 +65,37 @@ public class PlayerGUI : MonoBehaviour
         {
             coinsText.text = $"{count}";
         }
+    }
+
+
+
+    public void RefreshHPUpgradeCost(int value)
+    {
+        hpUpgradeCostText.text = value.ToString();
+    }
+
+    public void RefreshDamageUpgradeCost(int value)
+    {
+        damageUpgradeCostText.text = value.ToString();
+    }
+
+    public void HideHPUpgrade()
+    {
+        hpUpgradeCostText.alpha = 0;
+        hpHotKey.alpha = 0;
+        hpUpgradeButton.interactable = false;
+        upgradeHPImage.color = new Color32(150, 150, 150, 255);
+        heart.color = new Color32(150, 150, 150, 255);
+        hpGreenTick.color = new Color32(255, 255, 255, 255);
+    }
+
+    public void HideDamageUpgrade()
+    {
+        damageUpgradeCostText.alpha = 0;
+        damageHotKey.alpha = 0;
+        damageUpgradeButton.interactable = false;
+        upgradeDamageImage.color = new Color32(150, 150, 150, 255);
+        sword.color = new Color32(150, 150, 150, 255);
+        damageGreenTick.color = new Color32(255, 255, 255, 255);
     }
 }

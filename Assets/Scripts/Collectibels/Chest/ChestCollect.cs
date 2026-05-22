@@ -1,26 +1,37 @@
+using System.Collections;
 using UnityEngine;
 
 public class ChestCollect : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
     [SerializeField] private float collectRange = 3f;
-    [SerializeField] private CreateCoin _createCoin;
-    [SerializeField] private int coinsInside;
-    [SerializeField] private float spreadRadius;
-    [SerializeField] private float yOffSet;
+
+    [Header("Loot")]
+    [SerializeField] private CreaterOfRewards createrOfRewards;
+    [SerializeField] private float secondsBeforeSpawnLoot = 1f;
+
     private Animator _animator;
     private bool isCollected;
 
     void Start()
     {
         _animator = GetComponent<Animator>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+
+        playerTransform = GameObject
+            .FindGameObjectWithTag("Player")
+            .GetComponent<Transform>();
     }
+
     void Update()
     {
-        if(isCollected) return;
-        float distance = Vector2.Distance(playerTransform.position, transform.position);
-        if(distance < collectRange)
+        if (isCollected)
+            return;
+
+        float distance = Vector2.Distance(
+            playerTransform.position,
+            transform.position);
+
+        if (distance < collectRange)
         {
             Collect();
         }
@@ -28,10 +39,20 @@ public class ChestCollect : MonoBehaviour
 
     void Collect()
     {
-        if(!isCollected){
-            _animator.SetTrigger("Collect");
-            isCollected = true;
-            _createCoin.CreateMultipleCoins(transform.position, coinsInside, yOffSet, spreadRadius);
-        }
+        if (isCollected)
+            return;
+
+        isCollected = true;
+
+        _animator.SetTrigger("Collect");
+
+        StartCoroutine(SpawnLootRoutine());
+    }
+
+    IEnumerator SpawnLootRoutine()
+    {
+        yield return new WaitForSeconds(secondsBeforeSpawnLoot);
+
+        createrOfRewards.CreateReward(transform.position);
     }
 }

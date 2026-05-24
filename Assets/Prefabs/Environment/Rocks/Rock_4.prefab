@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9077561687169290210}
   - component: {fileID: 5765782683188991775}
   - component: {fileID: 8664883625866042323}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 7757029557545266800}
   - component: {fileID: 8332566346749348763}
   - component: {fileID: 994711422014651103}
+  - component: {fileID: -2534336129772271562}
   m_Layer: 0
   m_Name: Rock_4
   m_TagString: Untagged
@@ -211,6 +212,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-2534336129772271562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207918791882460874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &7574821025710099930
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +239,7 @@ GameObject:
   - component: {fileID: 8683300062364268205}
   - component: {fileID: 190140187189975293}
   - component: {fileID: 5782314127959457572}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

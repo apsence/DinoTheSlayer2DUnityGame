@@ -1,18 +1,24 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UpgradesButtonsBind : MonoBehaviour
 {
+    [KeyCodeAlpha]
     [SerializeField] private KeyCode hpUpgradeKey = KeyCode.Z;
+    [KeyCodeAlpha]
     [SerializeField] private KeyCode damageUpgradeKey = KeyCode.X;
+    
     [SerializeField] private Button hpButton;
     [SerializeField] private Button damageButton;
-    private Upgrades upgrades;
+    [SerializeField] private TextMeshProUGUI hpHotKey;
+    [SerializeField] private TextMeshProUGUI damageHotkey;
 
     void Awake()
     {
-        upgrades = GameObject.FindAnyObjectByType<Upgrades>();
+        hpHotKey.text = hpUpgradeKey.ToString();
+        damageHotkey.text = damageUpgradeKey.ToString();
     }
 
     private void Update()

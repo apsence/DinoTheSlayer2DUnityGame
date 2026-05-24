@@ -1,241 +1,259 @@
-using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class AI_Common : MonoBehaviour
 {
-    [Header("Атака")]
-    [SerializeField] private float agroRange;
-    [SerializeField] private float attackRange;
-    [SerializeField] private float maxDistanceToPlayer;
-    [SerializeField] private float _exitAttackRange;
+    [Header("Агрессия")]
+    [SerializeField] private float agroRange = 8f;
+    [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private float exitAttackRange = 12f;
 
     [Header("Перемещение")]
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 3f;
 
     [Header("Патрулирование")]
-    private Vector2 _targetWanderPoint;
-    [SerializeField] private float wanderRadius = 2f;      // радиус случайного перемещения
-    [SerializeField] private float waitTimeAtPoint = 2f;   // время ожидания в точке
-    [SerializeField] private float minWanderTime = 3f;     // минимум до след. точки
-    [SerializeField] private float maxWanderTime = 6f;     // максимум до след. точки
+    [SerializeField] private float wanderRadius = 4f;
+    [SerializeField] private float waitTimeAtPoint = 2f;
+    [SerializeField] private float minWanderTime = 3f;
+    [SerializeField] private float maxWanderTime = 6f;
+
     [Header("Анимирование")]
     [SerializeField] private UnitAnimator _unitAnimator;
 
-    [SerializeField] private LayerMask _targetLayers = -1;
-    private Transform _playerTransform;
-    private bool _isAttacking;
-    private bool _isMovingToWanderPoint;
-    private bool _isWaiting; 
-    private Vector2 _defaultPosition;
-    private SpriteRenderer _spriteRenderer;
-    private Rigidbody2D _rb;
-    private Attacker _attacker;
-    private Coroutine _wanderCoroutine;
-    private IDamageable _currentTarget;
+    private enum AIState { Wander, Chase, Attack }
+    private AIState _state = AIState.Wander;
 
-    public bool HasTarget => _currentTarget != null && _currentTarget.IsAlive;
+    private NavMeshAgent _agent;
+    private SpriteRenderer _spriteRenderer;
+    private Attacker _attacker;
+    private Transform _playerTransform;
+    private IDamageable _playerDamageable;
+    private Vector3 _defaultPosition;
+    private Coroutine _wanderCoroutine;
+    private bool _isWaiting;
+
+    public bool HasTarget => _playerDamageable != null && _playerDamageable.IsAlive;
+
+    // ─── Инициализация ───────────────────────────────────
+
     void Awake()
     {
-        _playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        var player = GameObject.FindWithTag("Player");
+        _playerTransform = player.transform;
+        _playerDamageable = player.GetComponent<IDamageable>();
+
         _defaultPosition = transform.position;
-        _rb = GetComponent<Rigidbody2D>();
+        _agent = GetComponent<NavMeshAgent>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _attacker = GetComponent<Attacker>();
+
+        _agent.updateRotation = false;
+        _agent.updateUpAxis = false;
+        _agent.stoppingDistance = 0;
+        _agent.speed = speed;
     }
+
     void Start()
     {
         _wanderCoroutine = StartCoroutine(WanderRoutine());
     }
 
+    // ─── Главный цикл ────────────────────────────────────
+
     void Update()
     {
-        FindNearestTarget();
+        UpdateState();
+        HandleAttack();
+        UpdateSpriteDirection();
+
+        if (_unitAnimator != null)
+            _unitAnimator.SetExternalVelocity(_agent.velocity);
     }
 
-    void FixedUpdate()
+    // ─── Машина состояний ────────────────────────────────
+
+    private void UpdateState()
     {
-        float distance = DistanceToPlayer();
-        // Если игрок рядом - включаем режим атаки
-        if (distance < agroRange && !_isAttacking)
-        {
-            _isAttacking = true;
-            StopWanderMovement(); // останавливаем блуждание
-        }
-        else if (distance > _exitAttackRange && _isAttacking)
-        {
-            _isAttacking = false;
-            StartCoroutine(WanderRoutine()); // перезапускаем блуждание
-            _unitAnimator.SetAttacking(false);
-        }
+        float dist = DistanceToPlayer();
 
-        if (_isAttacking)
+        switch (_state)
         {
-            bool shouldAttack = distance < attackRange;
-            _unitAnimator.SetAttacking(shouldAttack);
+            case AIState.Wander:
+                if (dist < agroRange)
+                    EnterChase();
+                break;
 
-            if (shouldAttack && Time.time >= _attacker.NextAttackTime)
-            {
-                _attacker.NextAttackTime = Time.time + _attacker.AttackColdown;
-                Attack();
-            }
-        }
-        
-        // Применяем движение
-        if (_isAttacking)
-        {
-            MoveToPlayer();
-        }
-        else if (_isMovingToWanderPoint)
-        {
-            MoveToWanderPoint();
-        }
-        else
-        {
-            _rb.linearVelocity = Vector2.zero;
+            case AIState.Chase:
+                if (dist > exitAttackRange)
+                    EnterWander();
+                else if (dist <= attackRange)
+                    EnterAttack();
+                else
+                {
+                    _agent.isStopped = false;
+                    _agent.SetDestination(_playerTransform.position);
+                }
+                break;
+
+            case AIState.Attack:
+                if (dist > attackRange * 1.15f)
+                {
+                    if (dist > exitAttackRange)
+                        EnterWander();
+                    else
+                        EnterChase();
+                }
+                break;
         }
     }
 
-    private void MoveToWanderPoint()
+    private void EnterChase()
     {
-        Vector2 direction = (_targetWanderPoint - (Vector2)transform.position).normalized;
-        
-        // Обновляем направление спрайта
-        UpdateSpriteDirection(direction.x);
-        
-        _rb.linearVelocity = direction * speed;
-        
-        // Если достигли точки
-        if (Vector2.Distance(transform.position, _targetWanderPoint) < 0.1f)
+        _state = AIState.Chase;
+        StopWander();
+        _unitAnimator?.SetAttacking(false);
+        _agent.isStopped = false;
+        _agent.SetDestination(_playerTransform.position);
+    }
+
+    private void EnterAttack()
+    {
+        _state = AIState.Attack;
+        _agent.isStopped = true;
+        _agent.ResetPath();
+        _unitAnimator?.SetAttacking(true);
+    }
+
+    private void EnterWander()
+    {
+        if (_state == AIState.Wander) return;
+        _state = AIState.Wander;
+        _unitAnimator?.SetAttacking(false);
+        _agent.isStopped = false;
+        _wanderCoroutine = StartCoroutine(WanderRoutine());
+    }
+
+    // ─── Атака ───────────────────────────────────────────
+
+    private void HandleAttack()
+    {
+        if (_state != AIState.Attack) return;
+
+        if (!HasTarget)
         {
-            _rb.linearVelocity = Vector2.zero;
-            _isMovingToWanderPoint = false;
-            StartCoroutine(WaitAtPoint());
-        }
-    }
-    
-    // ⏰ Корутина блуждания (выбирает случайные точки)
-    private IEnumerator WanderRoutine()
-    {
-        while (!_isAttacking) // пока не атакуем
-        {
-            // Ждём случайное время перед выбором новой точки
-            float waitTime = UnityEngine.Random.Range(minWanderTime, maxWanderTime);
-            yield return new WaitForSeconds(waitTime);
-            
-            if (!_isAttacking && !_isWaiting)
-            {
-                // Выбираем случайную точку вокруг дефолтной позиции
-                _targetWanderPoint = _defaultPosition + UnityEngine.Random.insideUnitCircle * wanderRadius;
-                _isMovingToWanderPoint = true;
-            }
-        }
-    }
-    
-    // ⏸ Ожидание в точке (чтобы не дрожал)
-    private IEnumerator WaitAtPoint()
-    {
-        _isWaiting = true;
-        yield return new WaitForSeconds(waitTimeAtPoint);
-        _isWaiting = false;
-    }
-
-    private void StopWanderMovement()
-    {
-        _isMovingToWanderPoint = false;
-        _isWaiting = false;
-        StopCoroutine(_wanderCoroutine); // останавливаем все корутины
-        
-        // Мгновенно останавливаем физику
-        _rb.linearVelocity = Vector2.zero;
-    }
-
-    float DistanceToPlayer()
-    {
-        float distance = Vector2.Distance( _playerTransform.position, transform.position);
-        return distance;
-    }
-
-    void MoveToPlayer()
-    {
-        Vector2 direction = ((Vector2)_playerTransform.position - (Vector2)transform.position).normalized;
-        UpdateSpriteDirection(direction.x);
-        if(DistanceToPlayer() < maxDistanceToPlayer) {
-            _rb.linearVelocity = Vector2.zero;
+            _unitAnimator?.SetAttacking(false);
+            EnterWander();
             return;
         }
-        _rb.linearVelocity = direction * speed;
-    }
 
-    private void UpdateSpriteDirection(float directionX)
-    {
-        if (directionX < 0)
-            _spriteRenderer.flipX = true;
-        else if (directionX > 0)
-            _spriteRenderer.flipX = false;
-    }
-
-    //* ---Таргеты---
-        private void FindNearestTarget()
-    {
-        Collider2D[] targets = Physics2D.OverlapCircleAll(transform.position, _attacker.AttackRange, _targetLayers);
-        
-        float closestDistance = _attacker.AttackRange;
-        IDamageable closestTarget = null;
-        
-        foreach (var target in targets)
+        if (Time.time >= _attacker.NextAttackTime)
         {
-            var damageable = target.GetComponent<IDamageable>();
-            if (damageable != null && damageable.IsAlive && damageable.Transform != transform)
-            {
-                float distance = Vector2.Distance(transform.position, damageable.Transform.position);
-                if (distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestTarget = damageable;
-                }
-            }
+            _attacker.NextAttackTime = Time.time + _attacker.AttackColdown;
+            PerformAttack(_playerDamageable);
         }
-        
-        _currentTarget = closestTarget;
     }
-    
+
     public void PerformAttack(IDamageable target)
     {
-        
+        if (target == null || !target.IsAlive) return;
+
         float distance = Vector2.Distance(transform.position, target.Transform.position);
-        if (distance > _attacker.AttackRange) return;
-        
-        Debug.LogWarning($"💥 ATTACKING from {name} (ID: {GetInstanceID()})");
+        if (distance > attackRange) return;
+
         target.TakeDamage(_attacker.Damage, _attacker.MinDamage, _attacker.MaxDamage);
-        
         _attacker.LastAttackTime = Time.time;
     }
 
-    public void Attack()
+    public void Attack() => PerformAttack(_playerDamageable);
+
+    // ─── Патрулирование ──────────────────────────────────
+
+    private IEnumerator WanderRoutine()
     {
-        AttackCurrentTarget();
-    }
-    
-    // Атака по текущему найденному
-    public void AttackCurrentTarget()
-    {
-        Debug.Log($"AttackCurrentTarget() called! _currentTarget = {_currentTarget}");
-        PerformAttack(_currentTarget);
-    }
-    
-    // Атака по конкретному объекту
-    public void AttackTarget(GameObject target)
-    {
-        var damageable = target.GetComponent<IDamageable>();
-        PerformAttack(damageable);
-    }
-    
-    // Ручная установка цели
-    public void SetTarget(IDamageable target)
-    {
-        _currentTarget = target;
+        while (_state == AIState.Wander)
+        {
+            float waitTime = Random.Range(minWanderTime, maxWanderTime);
+            yield return new WaitForSeconds(waitTime);
+
+            if (_state != AIState.Wander || _isWaiting) continue;
+
+            Vector3 wanderPoint = GetRandomNavMeshPoint(_defaultPosition, wanderRadius);
+            _agent.isStopped = false;
+            _agent.SetDestination(wanderPoint);
+
+            yield return new WaitUntil(() =>
+                _state != AIState.Wander ||
+                (!_agent.pathPending && _agent.remainingDistance < 0.3f));
+
+            if (_state != AIState.Wander) yield break;
+
+            _agent.isStopped = true;
+            _isWaiting = true;
+            yield return new WaitForSeconds(waitTimeAtPoint);
+            _isWaiting = false;
+            _agent.isStopped = false;
+        }
     }
 
+    private void StopWander()
+    {
+        _isWaiting = false;
+        if (_wanderCoroutine != null)
+        {
+            StopCoroutine(_wanderCoroutine);
+            _wanderCoroutine = null;
+        }
+    }
+
+    private Vector3 GetRandomNavMeshPoint(Vector3 origin, float radius)
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            Vector2 rand = Random.insideUnitCircle * radius;
+            Vector3 candidate = origin + new Vector3(rand.x, rand.y, 0f);
+            if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, radius, NavMesh.AllAreas))
+                return hit.position;
+        }
+        return origin;
+    }
+
+    // ─── Вспомогательные ─────────────────────────────────
+
+    private float DistanceToPlayer() =>
+        Vector2.Distance(_playerTransform.position, transform.position);
+
+    private void UpdateSpriteDirection()
+    {
+        if (_agent.velocity.sqrMagnitude < 0.01f) return;
+        _spriteRenderer.flipX = _agent.velocity.x < 0;
+    }
+
+    // ─── Gizmos ──────────────────────────────────────────
+
+    void OnDrawGizmosSelected()
+    {
+        Draw2DCircle(transform.position, agroRange, Color.yellow);
+        Draw2DCircle(transform.position, attackRange, Color.red);
+        Draw2DCircle(transform.position, exitAttackRange, Color.cyan);
+        Vector3 def = Application.isPlaying ? _defaultPosition : transform.position;
+        Draw2DCircle(def, wanderRadius, Color.green);
+    }
+
+    private void Draw2DCircle(Vector3 center, float radius, Color color)
+    {
+        Gizmos.color = color;
+        int segments = 32;
+        Vector3 prev = center + new Vector3(radius, 0, 0);
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = i * Mathf.PI * 2f / segments;
+            Vector3 next = center + new Vector3(
+                Mathf.Cos(angle) * radius,
+                Mathf.Sin(angle) * radius, 0);
+            Gizmos.DrawLine(prev, next);
+            prev = next;
+        }
+    }
 }

@@ -140,10 +140,16 @@ public class UnitAnimator : MonoBehaviour
         _animator.SetTrigger("hitTrigger");
         OnHit?.Invoke();
     }
+
+    public void SetExternalVelocity(Vector2 velocity)
+    {
+        UpdateMovementAnimation(velocity);
+    }
     
     // Public properties
     public bool IsAttacking => _isAttacking;
     public bool IsDead => _isDead;
     public bool HasAttack => _hasAttack;
     public bool HasDeath => _hasDeath;
+    
 }

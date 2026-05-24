@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 8486168968123068128}
   - component: {fileID: 2068188857515739052}
   - component: {fileID: 1182885159654886697}
+  - component: {fileID: 8574784180769811859}
+  - component: {fileID: -3854218640984845665}
   m_Layer: 0
   m_Name: Orc
   m_TagString: Untagged
@@ -183,11 +185,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26eb329135b30a74e9cf69a07ebadceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_Common
-  agroRange: 6
+  agroRange: 5
   attackRange: 1.9
-  maxDistanceToPlayer: 1.4
-  _exitAttackRange: 7
-  speed: 2
+  exitAttackRange: 7
+  speed: 2.7
   wanderRadius: 2
   waitTimeAtPoint: 3
   minWanderTime: 3
@@ -206,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitAnimator
   _animator: {fileID: 2068188857515739052}
-  _rb: {fileID: 3680416721797883330}
+  _rb: {fileID: 0}
   movementThreshold: 0.1
   _hasAttack: 0
   _hasDeath: 0
@@ -225,19 +226,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Attacker
   _damage: 3
   _attackCooldown: 1
-  _attackRange: 1.5
   _minDamage: 1
   _maxDamage: 3
   _nextAttackTime: 0
-  _targetLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  OnAttackPerformed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHitTarget:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &8486168968123068128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,20 +241,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f36bf6b5959e14ab52ed9ea13c244e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  _maxHealth: 25
-  OnDamageTaken:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHeal:
-    m_PersistentCalls:
-      m_Calls: []
+  maxHealth: 100
+  currentHealth: 0
   _playerGUI: {fileID: 0}
+  createrOfRewards: {fileID: 0}
 --- !u!95 &2068188857515739052
 Animator:
   serializedVersion: 7
@@ -299,3 +280,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreateRewardForKilling
   loot: []
+  itemSpawner: {fileID: 0}
+  spreadRadius: 0
+  yOffSet: 0
+--- !u!195 &8574784180769811859
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331881854340851501}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &-3854218640984845665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331881854340851501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YSort

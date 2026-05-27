@@ -20,15 +20,8 @@ public class PlayerGUI : MonoBehaviour
     [SerializeField] private Image damageGreenTick;
     [SerializeField] private Button hpUpgradeButton;
     [SerializeField] private Button damageUpgradeButton;
-
-    private Attacker _attacker;
-    private Health _health;
-
-    void Awake()
-    {
-        _attacker = GameObject.FindGameObjectWithTag("Player").GetComponent<Attacker>();
-        _health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
-    }
+    [SerializeField] private Attacker _attacker;
+    [SerializeField] private Health _health;
 
     void Start()
     {

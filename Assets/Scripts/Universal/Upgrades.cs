@@ -29,11 +29,11 @@ public class Upgrades : MonoBehaviour
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        _coins = player.GetComponent<Coin>();
-        _playerGUI = player.GetComponent<PlayerGUI>();
-        _health = player.GetComponent<Health>();
-        _attacker = player.GetComponent<Attacker>();
-        _upgradeGUI = player.GetComponent<UpgradeGUI>();
+        _coins = player.GetComponentInChildren<Coin>();
+        _playerGUI = player.GetComponentInChildren<PlayerGUI>();
+        _health = player.GetComponentInChildren<Health>();
+        _attacker = player.GetComponentInChildren<Attacker>();
+        _upgradeGUI = player.GetComponentInChildren<UpgradeGUI>();
 
     }
 

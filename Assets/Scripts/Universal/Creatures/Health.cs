@@ -16,7 +16,9 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField] private CreaterOfRewards createrOfRewards;
 
     private bool _isDead;
-    public int MaxHealth {get;}
+    private ManageBarVisibility manageBarVisibility;
+
+    public int MaxHealth => maxHealth;
     public bool IsAlive => !_isDead && currentHealth > 0;
     public Transform Transform => transform;
     public int CurrentHealth => currentHealth;
@@ -25,6 +27,7 @@ public class Health : MonoBehaviour, IDamageable
     {
         currentHealth = maxHealth;
         _isDead = false;
+        manageBarVisibility = GetComponent<ManageBarVisibility>();
     }
     
     public void TakeDamage(int amount, int _minDamage, int _maxDamage)
@@ -38,7 +41,13 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth -= finalDamage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
-        if(gameObject.CompareTag("Player")) _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);
+        if(gameObject.CompareTag("Player")) {
+            _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);
+        }
+        else
+        {
+            manageBarVisibility.ShowBar();
+        }
 
         if (currentHealth <= 0)
         {

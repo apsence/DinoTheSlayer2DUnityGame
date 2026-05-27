@@ -22,13 +22,13 @@ public class Collectables : MonoBehaviour
         switch (lootType)
         {
             case LootType.Coin:
-                Coin coin = collision.GetComponent<Coin>();
+                Coin coin = collision.GetComponentInChildren<Coin>();
                 coin.ChangeCoinsCount( + monetsAdd);
 
                 break;
 
             case LootType.HealthPotion:
-                Health health = collision.GetComponent<Health>();
+                Health health = collision.GetComponentInChildren<Health>();
                 health.Heal(hpRestore);
 
                 break;

@@ -3,16 +3,24 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public int coinsTakenByPlayer;
-    private TextMeshProUGUI _playerCoinsText;
+    public int coinsCount;
+    [SerializeField] private PlayerGUI playerGUI;
 
-    void Start()
+    // Обновляет количество монет (и добавляет, если false)
+    public void ChangeCoinsCount(int amount)
     {
-        _playerCoinsText = GameObject.FindWithTag("CoinsCount").GetComponent<TextMeshProUGUI>();
+        coinsCount += amount;
+
+        if(coinsCount < 0)
+        {
+            coinsCount = 0;
+        }
+
+        RefreshCoinsGUI();
     }
 
-    public void RefresfCountOfCoins()
+    void RefreshCoinsGUI()
     {
-        _playerCoinsText.text = coinsTakenByPlayer.ToString();
+        playerGUI.RefreshPlayerHUDCoins(coinsCount);
     }
 }

@@ -1,0 +1,16 @@
+
+Logs/
+Temp/
+Library/
+UserSettings/
+.vscode/
+
+
+*.csproj
+*.slnx
+
+
+
+*.lscache
+
+TODO.md

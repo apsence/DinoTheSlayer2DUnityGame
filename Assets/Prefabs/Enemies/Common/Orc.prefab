@@ -136,7 +136,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 1238841445
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &1631613436264103572
 MonoBehaviour:
@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 2533270904034251936}
   - component: {fileID: 8486168968123068128}
   - component: {fileID: 1182885159654886697}
+  - component: {fileID: 6905362327652329175}
   - component: {fileID: -3854218640984845665}
   m_Layer: 3
   m_Name: Orc
@@ -291,7 +292,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 0
@@ -387,7 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_Common
   agroRange: 5
-  attackRange: 1.9
+  attackRange: 1.6
   exitAttackRange: 7
   speed: 2.7
   wanderRadius: 2
@@ -465,8 +466,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 100
-  currentHealth: 0
+  currentHealth: 55
+  delayBeforeDestroyPlayer: 0
+  hpRegenRate: 2.5
+  hpRegen: 1
   _playerGUI: {fileID: 0}
+  delayBeforeDestroyAI: 5
   createrOfRewards: {fileID: 0}
 --- !u!114 &1182885159654886697
 MonoBehaviour:
@@ -484,6 +489,22 @@ MonoBehaviour:
   itemSpawner: {fileID: 0}
   spreadRadius: 0
   yOffSet: 0
+--- !u!114 &6905362327652329175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331881854340851501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e18b6c3064bedc4996fd03da7ae59cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ManageBarVisibility
+  canvas: {fileID: 5013145386784944975}
+  healthBar: {fileID: 1081771034935137523}
+  visibleDuration: 2
+  distanceToShowBar: 3.5
 --- !u!114 &-3854218640984845665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +517,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  canvas: {fileID: 0}
+  offset: 10
 --- !u!1 &7405276841360032506
 GameObject:
   m_ObjectHideFlags: 0

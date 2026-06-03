@@ -21,6 +21,9 @@ public class AI_Common : MonoBehaviour
 
     [Header("Анимирование")]
     [SerializeField] private UnitAnimator _unitAnimator;
+    
+    private Transform _playerTransform;
+    private Health _playerHealth;
 
     private enum AIState { Wander, Chase, Attack }
     private AIState _state = AIState.Wander;
@@ -28,26 +31,27 @@ public class AI_Common : MonoBehaviour
     private NavMeshAgent _agent;
     private SpriteRenderer _spriteRenderer;
     private Attacker _attacker;
-    private Transform _playerTransform;
-    private IDamageable _playerDamageable;
     private Vector3 _defaultPosition;
     private Coroutine _wanderCoroutine;
     private bool _isWaiting;
 
-    public bool HasTarget => _playerDamageable != null && _playerDamageable.IsAlive;
+    private Health _health;
+
+    public bool HasTarget => _playerTransform != null && _playerHealth.IsAlive;
 
     // ─── Инициализация ───────────────────────────────────
 
     void Awake()
     {
-        var player = GameObject.FindWithTag("Player");
-        _playerTransform = player.transform;
-        _playerDamageable = player.GetComponent<IDamageable>();
+        GameObject _player = GameObject.FindGameObjectWithTag("Player");
+        _playerTransform = _player.GetComponent<Transform>();
+        _playerHealth = _player.GetComponent<PlayerReferences>().Health;
 
         _defaultPosition = transform.position;
         _agent = GetComponent<NavMeshAgent>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _attacker = GetComponent<Attacker>();
+        _health = GetComponent<Health>();
 
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
@@ -64,6 +68,7 @@ public class AI_Common : MonoBehaviour
 
     void Update()
     {
+        if(!_health.IsAlive) return;
         UpdateState();
         HandleAttack();
         UpdateSpriteDirection();
@@ -98,7 +103,7 @@ public class AI_Common : MonoBehaviour
                 break;
 
             case AIState.Attack:
-                if (dist > attackRange * 1.15f)
+                if (dist > attackRange)
                 {
                     if (dist > exitAttackRange)
                         EnterWander();
@@ -151,22 +156,24 @@ public class AI_Common : MonoBehaviour
         if (Time.time >= _attacker.NextAttackTime)
         {
             _attacker.NextAttackTime = Time.time + _attacker.AttackColdown;
-            PerformAttack(_playerDamageable);
+            PerformAttack();
         }
     }
 
-    public void PerformAttack(IDamageable target)
+    public void PerformAttack()
     {
-        if (target == null || !target.IsAlive) return;
+        if(_playerHealth.IsAlive != true) return;
 
-        float distance = Vector2.Distance(transform.position, target.Transform.position);
-        if (distance > attackRange) return;
+        float distance = (_playerTransform.position - transform.position).sqrMagnitude;
+        if (distance > attackRange * attackRange) 
+        {
+            Debug.Log($"Дистанция больше атак ренжа: дистанция: {distance}, атак ренж: {attackRange}");
+            return;
+        }
 
-        target.TakeDamage(_attacker.Damage, _attacker.MinDamage, _attacker.MaxDamage);
+        _playerHealth.TakeDamage(_attacker.Damage, _attacker.MinDamage, _attacker.MaxDamage);
         _attacker.LastAttackTime = Time.time;
     }
-
-    public void Attack() => PerformAttack(_playerDamageable);
 
     // ─── Патрулирование ──────────────────────────────────
 

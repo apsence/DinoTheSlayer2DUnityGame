@@ -31,7 +31,7 @@ public class PlayerAnimator : MonoBehaviour
 
     public void ChangeState(PlayerState newState, [System.Runtime.CompilerServices.CallerMemberName] string caller = "")
     {
-        Debug.Log(currentState);
+        //Debug.Log(currentState);
         if (currentState == newState)
             return;
         if(currentState == PlayerState.Dead)

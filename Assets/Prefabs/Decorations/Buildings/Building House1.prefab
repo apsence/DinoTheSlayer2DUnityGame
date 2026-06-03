@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7919215971957810182}
   - component: {fileID: 4608866445550643912}
   - component: {fileID: -6834513052050450051}
+  - component: {fileID: 7925850987442059927}
   m_Layer: 0
   m_Name: Building House1
   m_TagString: Untagged
@@ -125,6 +126,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &7925850987442059927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274956587528544130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 6
 --- !u!1 &5789982308023549218
 GameObject:
   m_ObjectHideFlags: 0

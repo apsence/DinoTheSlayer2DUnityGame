@@ -19,6 +19,8 @@ TagManager:
   - UpgradeDamageButton
   - PlayerGUI
   - AIObstacle
+  - PlayerCollider
+  - PlayerScripts
   layers:
   - Default
   - TransparentFX

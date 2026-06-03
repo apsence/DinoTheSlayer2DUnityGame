@@ -1,3 +1,4 @@
+using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,16 +8,21 @@ public class Health : MonoBehaviour, IDamageable
     [Header("Здоровье")]
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private int currentHealth;
+    [SerializeField] private float delayBeforeDestroyPlayer;
+    [SerializeField] private float hpRegenRate = 0.5f;
+    [SerializeField] private int hpRegen = 1;  
 
     [Header("GUI")]
     [SerializeField] private PlayerGUI _playerGUI;
 
     [Header("---НЕ ИГРОК---")]
+    [SerializeField] private float delayBeforeDestroyAI;
     [Header("Ссылки")]
     [SerializeField] private CreaterOfRewards createrOfRewards;
 
     private bool _isDead;
     private ManageBarVisibility manageBarVisibility;
+    private UnitAnimator _unitAnimator;
 
     public int MaxHealth => maxHealth;
     public bool IsAlive => !_isDead && currentHealth > 0;
@@ -25,15 +31,17 @@ public class Health : MonoBehaviour, IDamageable
     
     void Start()
     {
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         _isDead = false;
         manageBarVisibility = GetComponent<ManageBarVisibility>();
+        _unitAnimator = GetComponent<UnitAnimator>();
+
+        StartCoroutine(Regen());
     }
     
     public void TakeDamage(int amount, int _minDamage, int _maxDamage)
     {
         if (_isDead) return;
-        
         // Случайный разброс урона
         int finalDamage = amount + Random.Range(_minDamage, _maxDamage + 1);
         finalDamage = Mathf.Max(1, finalDamage); // Минимум 1 урон
@@ -41,7 +49,7 @@ public class Health : MonoBehaviour, IDamageable
         currentHealth -= finalDamage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
-        if(gameObject.CompareTag("Player")) {
+        if(gameObject.CompareTag("PlayerScripts")) {
             _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);
         }
         else
@@ -74,9 +82,39 @@ public class Health : MonoBehaviour, IDamageable
         if (_isDead) return;
         
         _isDead = true;
-        
-        createrOfRewards.CreateReward(transform.position);
-        Destroy(gameObject);        
+
+        if (gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject, delayBeforeDestroyPlayer);
+        }
+        else
+        {
+            createrOfRewards.CreateReward(transform.position);
+            _unitAnimator.Die();
+
+            gameObject.GetComponent<Rigidbody2D>().simulated = false;
+            gameObject.GetComponent<Collider2D>().enabled = false;
+
+            Destroy(gameObject, delayBeforeDestroyAI);
+        }
+                
+    }
+
+    IEnumerator Regen()
+    {
+        while (IsAlive)
+        {
+            yield return new WaitForSeconds(hpRegenRate);
+            currentHealth = Mathf.Min(currentHealth + hpRegen, maxHealth);
+            if(gameObject.CompareTag("PlayerScripts")) {
+                _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);
+            }
+            else
+            {
+                manageBarVisibility.RefreshHealthBar();
+            }
+        }
+
     }
 
     public void UpgradeMaxHealth(int amount, int healBonus)

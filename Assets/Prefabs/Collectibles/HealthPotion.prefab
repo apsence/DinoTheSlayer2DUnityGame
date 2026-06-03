@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -4520996057349983881}
   - component: {fileID: 3796760098680796906}
   - component: {fileID: 2860950520889629971}
+  - component: {fileID: 6372688704648940183}
   m_Layer: 0
   m_Name: HealthPotion
   m_TagString: Untagged
@@ -166,3 +167,18 @@ MonoBehaviour:
   monetsAdd: 0
   hpRestore: 20
   lootType: 1
+  prefab: {fileID: 4988610538822723691, guid: 76694168ecafe814694abceb2e9fe488, type: 3}
+  xOffSet: 0.05
+  yOffSet: -0.125
+--- !u!114 &6372688704648940183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4046999386097372701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e720d7befa4c543a1c8815d434475a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreateEffect

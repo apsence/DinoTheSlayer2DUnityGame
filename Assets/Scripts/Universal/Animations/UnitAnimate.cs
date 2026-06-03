@@ -19,12 +19,6 @@ public class UnitAnimator : MonoBehaviour
     private bool _isAttacking;
     private bool _isDead;
     
-    // События для внешней логики
-    public event Action OnAttackStart;
-    public event Action OnAttackEnd;
-    public event Action OnDeath;
-    public event Action OnHit;
-    
     void Start()
     {
         AutoDetectCapabilities();
@@ -90,7 +84,6 @@ public class UnitAnimator : MonoBehaviour
     // В классе UnitAnimator:
     public void SetAttacking(bool attacking)
     {
-        //Debug.Log($"SetAttacking called: attacking={attacking}, _isAttacking={_isAttacking}, _isDead={_isDead}, _hasAttack={_hasAttack}");
         
         if (_isDead || !_hasAttack) return;
         if (_isAttacking == attacking) 
@@ -106,11 +99,6 @@ public class UnitAnimator : MonoBehaviour
         if (attacking)
         {
             _animator.SetTrigger("attackTrigger");
-            OnAttackStart?.Invoke();
-        }
-        else
-        {
-            OnAttackEnd?.Invoke();
         }
     }
     
@@ -128,8 +116,6 @@ public class UnitAnimator : MonoBehaviour
             if (HasParameter("isDead"))
                 _animator.SetBool("isDead", true);
         }
-        
-        OnDeath?.Invoke();
     }
     
     // Damage methods
@@ -138,7 +124,6 @@ public class UnitAnimator : MonoBehaviour
         if (_isDead || !_hasDamage) return;
         
         _animator.SetTrigger("hitTrigger");
-        OnHit?.Invoke();
     }
 
     public void SetExternalVelocity(Vector2 velocity)

@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 5689155067474197687}
   - component: {fileID: 73392634463866713}
   - component: {fileID: 793681633396136055}
+  - component: {fileID: -7090778066091703606}
   m_Layer: 0
   m_Name: Tree1_0
   m_TagString: Untagged
@@ -377,3 +378,16 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &-7090778066091703606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9142837774839133077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 3

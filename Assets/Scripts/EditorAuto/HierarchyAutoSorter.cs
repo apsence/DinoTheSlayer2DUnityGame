@@ -19,38 +19,45 @@ public static class HierarchyAutoSorter
         GameObject collectablesRoot = GameObject.Find("Collectables");
         GameObject buildingsRoot = GameObject.Find("Buildings");
 
-        if (treesRoot == null && rocksRoot == null && bushesRoot == null && plantsRoot == null && waterRoot == null)
-            return;
-
         foreach (GameObject obj in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
-            if (obj.name.StartsWith("Tree") && obj.transform.parent == null)
+            if (obj.transform.parent != null)
+                continue;
+
+            WorldObject worldObject = obj.GetComponent<WorldObject>();
+
+            if (worldObject == null)
+                continue;
+
+            switch (worldObject.Type)
             {
-                obj.transform.SetParent(treesRoot.transform);
-            }
-            else if(obj.name.StartsWith("Rock") && obj.transform.parent == null)
-            {
-                obj.transform.SetParent(rocksRoot.transform);
-            }
-            else if(obj.name.StartsWith("Bush") && obj.transform.parent == null)
-            {
-                obj.transform.SetParent(bushesRoot.transform);
-            }
-            else if(obj.name.StartsWith("Plant") && obj.transform.parent == null)
-            {
-                obj.transform.SetParent(plantsRoot.transform);
-            }
-            else if(obj.name.StartsWith("Water") && obj.transform.parent == null)
-            {
-                obj.transform.SetParent(waterRoot.transform);
-            }
-            else if(obj.name.StartsWith("Collectable") && obj.transform.parent == null)
-            {
-                obj.transform.SetParent(collectablesRoot.transform);
-            }
-            else if(obj.name.StartsWith("Building") && obj.transform.parent == null)
-            {
-                obj.transform.SetParent(buildingsRoot.transform);
+                case WorldObjectType.Tree:
+                    obj.transform.SetParent(treesRoot.transform);
+                    break;
+
+                case WorldObjectType.Rock:
+                    obj.transform.SetParent(rocksRoot.transform);
+                    break;
+
+                case WorldObjectType.Bush:
+                    obj.transform.SetParent(bushesRoot.transform);
+                    break;
+
+                case WorldObjectType.Plant:
+                    obj.transform.SetParent(plantsRoot.transform);
+                    break;
+
+                case WorldObjectType.Water:
+                    obj.transform.SetParent(waterRoot.transform);
+                    break;
+
+                case WorldObjectType.Collectable:
+                    obj.transform.SetParent(collectablesRoot.transform);
+                    break;
+
+                case WorldObjectType.Building:
+                    obj.transform.SetParent(buildingsRoot.transform);
+                    break;
             }
         }
     }

@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: 8332566346749348763}
   - component: {fileID: 994711422014651103}
   - component: {fileID: -2534336129772271562}
+  - component: {fileID: -5612527778607884318}
   m_Layer: 0
   m_Name: Rock_4
   m_TagString: Untagged
@@ -228,6 +229,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &-5612527778607884318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4207918791882460874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 1
 --- !u!1 &7574821025710099930
 GameObject:
   m_ObjectHideFlags: 0

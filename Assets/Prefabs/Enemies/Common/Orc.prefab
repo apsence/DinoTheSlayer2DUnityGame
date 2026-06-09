@@ -199,6 +199,7 @@ GameObject:
   - component: {fileID: 1182885159654886697}
   - component: {fileID: 6905362327652329175}
   - component: {fileID: -3854218640984845665}
+  - component: {fileID: -2606416546757772027}
   m_Layer: 3
   m_Name: Orc
   m_TagString: Untagged
@@ -517,8 +518,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
-  canvas: {fileID: 0}
   offset: 10
+--- !u!114 &-2606416546757772027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4331881854340851501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 8
 --- !u!1 &7405276841360032506
 GameObject:
   m_ObjectHideFlags: 0

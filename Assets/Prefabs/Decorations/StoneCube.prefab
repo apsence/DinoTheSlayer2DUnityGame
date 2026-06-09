@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 570884514908545501}
   - component: {fileID: 8383550237581835355}
   - component: {fileID: 953979049673299287}
+  - component: {fileID: -5440733721641538346}
+  - component: {fileID: 7441794159504622874}
   m_Layer: 0
   m_Name: StoneCube
   m_TagString: Untagged
@@ -108,6 +110,35 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.69334507, y: 1.0389385}
   m_EdgeRadius: 0
+--- !u!114 &-5440733721641538346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679609485247884174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 7
+--- !u!114 &7441794159504622874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679609485247884174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &2075014831526743832
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  offset: 10
 --- !u!1 &8876814736058659670
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,3 +346,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  offset: 10

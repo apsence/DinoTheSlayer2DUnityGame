@@ -8,7 +8,9 @@ public enum WorldObjectType
     Plant,
     Water,
     Collectable,
-    Building
+    Building,
+    Decoration,
+    Creature
 }
 
 public class WorldObject : MonoBehaviour

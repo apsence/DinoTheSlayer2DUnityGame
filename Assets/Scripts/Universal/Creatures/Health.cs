@@ -18,7 +18,9 @@ public class Health : MonoBehaviour, IDamageable
     [Header("---НЕ ИГРОК---")]
     [SerializeField] private float delayBeforeDestroyAI;
     [Header("Ссылки")]
-    [SerializeField] private CreaterOfRewards createrOfRewards;
+    
+    
+    private CreaterOfRewards _createrOfRewards;
 
     private bool _isDead;
     private ManageBarVisibility manageBarVisibility;
@@ -35,6 +37,7 @@ public class Health : MonoBehaviour, IDamageable
         _isDead = false;
         manageBarVisibility = GetComponent<ManageBarVisibility>();
         _unitAnimator = GetComponent<UnitAnimator>();
+        _createrOfRewards = GetComponent<CreaterOfRewards>();
 
         StartCoroutine(Regen());
     }
@@ -89,7 +92,7 @@ public class Health : MonoBehaviour, IDamageable
         }
         else
         {
-            createrOfRewards.CreateReward(transform.position);
+            _createrOfRewards.CreateReward(transform.position);
             _unitAnimator.Die();
 
             gameObject.GetComponent<Rigidbody2D>().simulated = false;

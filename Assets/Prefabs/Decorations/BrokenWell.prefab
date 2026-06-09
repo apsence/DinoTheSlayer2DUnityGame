@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4131983441163716869}
   - component: {fileID: 8126095446905298840}
   - component: {fileID: 5507172556327961834}
+  - component: {fileID: -731160671690919379}
+  - component: {fileID: 7483584555590600920}
   m_Layer: 0
   m_Name: BrokenWell
   m_TagString: Untagged
@@ -108,6 +110,35 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.1540947, y: 0.9449644}
   m_EdgeRadius: 0
+--- !u!114 &-731160671690919379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4218968188644897323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 7
+--- !u!114 &7483584555590600920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4218968188644897323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifier
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &6749699047617307383
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,6 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  offset: 10
 --- !u!1 &7823497974143627535
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,3 +346,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  offset: 10

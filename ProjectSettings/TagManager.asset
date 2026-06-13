@@ -21,6 +21,7 @@ TagManager:
   - AIObstacle
   - PlayerCollider
   - PlayerScripts
+  - Destructible
   layers:
   - Default
   - TransparentFX
@@ -28,7 +29,7 @@ TagManager:
   - Enemies
   - Water
   - UI
-  - 
+  - Destructibles
   - 
   - 
   - 

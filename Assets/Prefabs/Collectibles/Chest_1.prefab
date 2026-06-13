@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6791301222794203930}
   - component: {fileID: -7370190344107205095}
   - component: {fileID: -1394508089840186121}
+  - component: {fileID: -6090334096006497692}
   m_Layer: 0
   m_Name: Chest_1
   m_TagString: Untagged
@@ -238,6 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  offset: 10
 --- !u!114 &-7370190344107205095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +269,19 @@ MonoBehaviour:
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!114 &-6090334096006497692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317315119158323595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 0
 --- !u!1 &3471898210960074223
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,3 +385,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  offset: 10

@@ -33,13 +33,16 @@ public class Health : MonoBehaviour, IDamageable
     
     void Start()
     {
-        //currentHealth = maxHealth;
+        currentHealth = maxHealth;
         _isDead = false;
         manageBarVisibility = GetComponent<ManageBarVisibility>();
         _unitAnimator = GetComponent<UnitAnimator>();
         _createrOfRewards = GetComponent<CreaterOfRewards>();
 
-        StartCoroutine(Regen());
+        if(hpRegen > 0 && hpRegenRate > 0)
+        {
+            StartCoroutine(Regen());
+        }
     }
     
     public void TakeDamage(int amount, int _minDamage, int _maxDamage)
@@ -55,7 +58,7 @@ public class Health : MonoBehaviour, IDamageable
         if(gameObject.CompareTag("PlayerScripts")) {
             _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);
         }
-        else
+        else if(gameObject.CompareTag("Enemy"))
         {
             manageBarVisibility.ShowBar();
         }
@@ -90,7 +93,7 @@ public class Health : MonoBehaviour, IDamageable
         {
             Destroy(gameObject, delayBeforeDestroyPlayer);
         }
-        else
+        else if(gameObject.CompareTag("Enemy"))
         {
             _createrOfRewards.CreateReward(transform.position);
             _unitAnimator.Die();
@@ -99,6 +102,11 @@ public class Health : MonoBehaviour, IDamageable
             gameObject.GetComponent<Collider2D>().enabled = false;
 
             Destroy(gameObject, delayBeforeDestroyAI);
+        } else if (gameObject.CompareTag("Destructible"))
+        {
+            gameObject.GetComponent<Animator>().SetTrigger("Destroy");
+            gameObject.GetComponent<Rigidbody2D>().simulated = false;
+            gameObject.GetComponent<Collider2D>().enabled = false;
         }
                 
     }

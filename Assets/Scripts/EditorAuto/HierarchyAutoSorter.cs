@@ -20,6 +20,7 @@ public static class HierarchyAutoSorter
         GameObject buildingsRoot = GameObject.Find("Buildings");
         GameObject decorationsRoot = GameObject.Find("Decorations");
         GameObject creaturesRoot = GameObject.Find("Creatures");
+        GameObject destructiblesRoot = GameObject.Find("Destructibles");
 
         foreach (GameObject obj in Object.FindObjectsByType<GameObject>(FindObjectsSortMode.None))
         {
@@ -67,6 +68,10 @@ public static class HierarchyAutoSorter
 
                 case WorldObjectType.Creature:
                     obj.transform.SetParent(creaturesRoot.transform);
+                    break;
+
+                case WorldObjectType.Destructible:
+                    obj.transform.SetParent(destructiblesRoot.transform);
                     break;
             }
         }

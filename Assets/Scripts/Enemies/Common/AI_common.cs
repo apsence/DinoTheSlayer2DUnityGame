@@ -21,6 +21,9 @@ public class AI_Common : MonoBehaviour
 
     [Header("Анимирование")]
     [SerializeField] private UnitAnimator _unitAnimator;
+
+    [Header("Атака ИИ")]
+    [SerializeField] private float attackSpeed;
     
     private Transform _playerTransform;
     private Health _playerHealth;
@@ -57,6 +60,8 @@ public class AI_Common : MonoBehaviour
         _agent.updateUpAxis = false;
         _agent.stoppingDistance = 0;
         _agent.speed = speed;
+
+        GetComponent<Animator>().SetFloat("AttackSpeed", attackSpeed);
     }
 
     void Start()
@@ -70,7 +75,7 @@ public class AI_Common : MonoBehaviour
     {
         if(!_health.IsAlive) return;
         UpdateState();
-        HandleAttack();
+        //HandleAttack();
         UpdateSpriteDirection();
 
         if (_unitAnimator != null)
@@ -142,7 +147,7 @@ public class AI_Common : MonoBehaviour
 
     // ─── Атака ───────────────────────────────────────────
 
-    private void HandleAttack()
+    public void HandleAttack()
     {
         if (_state != AIState.Attack) return;
 
@@ -152,12 +157,7 @@ public class AI_Common : MonoBehaviour
             EnterWander();
             return;
         }
-
-        if (Time.time >= _attacker.NextAttackTime)
-        {
-            _attacker.NextAttackTime = Time.time + _attacker.AttackColdown;
             PerformAttack();
-        }
     }
 
     public void PerformAttack()
@@ -167,12 +167,12 @@ public class AI_Common : MonoBehaviour
         float distance = (_playerTransform.position - transform.position).sqrMagnitude;
         if (distance > attackRange * attackRange) 
         {
-            Debug.Log($"Дистанция больше атак ренжа: дистанция: {distance}, атак ренж: {attackRange}");
+            //Debug.Log($"Дистанция больше атак ренжа: дистанция: {distance}, атак ренж: {attackRange}");
             return;
         }
 
         _playerHealth.TakeDamage(_attacker.Damage, _attacker.MinDamage, _attacker.MaxDamage);
-        _attacker.LastAttackTime = Time.time;
+        //_attacker.LastAttackTime = Time.time;
     }
 
     // ─── Патрулирование ──────────────────────────────────

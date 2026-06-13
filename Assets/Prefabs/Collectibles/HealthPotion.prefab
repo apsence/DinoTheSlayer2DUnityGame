@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3796760098680796906}
   - component: {fileID: 2860950520889629971}
   - component: {fileID: 6372688704648940183}
+  - component: {fileID: -2775967719961078346}
   m_Layer: 0
   m_Name: HealthPotion
   m_TagString: Untagged
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 415b36a248c330c4c9286c6acbee6254, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::YSort
+  offset: 10
 --- !u!114 &2860950520889629971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,3 +184,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04e720d7befa4c543a1c8815d434475a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CreateEffect
+--- !u!114 &-2775967719961078346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4046999386097372701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a8e863516015b4da5b81183b198dd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldObject
+  Type: 5

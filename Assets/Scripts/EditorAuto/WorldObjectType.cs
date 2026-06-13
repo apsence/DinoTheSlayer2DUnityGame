@@ -10,7 +10,8 @@ public enum WorldObjectType
     Collectable,
     Building,
     Decoration,
-    Creature
+    Creature,
+    Destructible
 }
 
 public class WorldObject : MonoBehaviour

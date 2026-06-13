@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AI_Common
   agroRange: 5
-  attackRange: 1.6
+  attackRange: 1.4
   exitAttackRange: 7
   speed: 2.7
   wanderRadius: 2
@@ -397,6 +397,7 @@ MonoBehaviour:
   minWanderTime: 3
   maxWanderTime: 6
   _unitAnimator: {fileID: -571093204583913139}
+  attackSpeed: 1
 --- !u!195 &8574784180769811859
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -473,7 +474,6 @@ MonoBehaviour:
   hpRegen: 1
   _playerGUI: {fileID: 0}
   delayBeforeDestroyAI: 5
-  createrOfRewards: {fileID: 0}
 --- !u!114 &1182885159654886697
 MonoBehaviour:
   m_ObjectHideFlags: 0

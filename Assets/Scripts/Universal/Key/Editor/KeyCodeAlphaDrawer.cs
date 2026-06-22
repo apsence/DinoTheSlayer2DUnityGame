@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 [CustomPropertyDrawer(typeof(KeyCodeAlphaAttribute))]
 public class KeyCodeAlphaDrawer : PropertyDrawer
@@ -16,7 +17,8 @@ public class KeyCodeAlphaDrawer : PropertyDrawer
             KeyCode.K, KeyCode.L, KeyCode.M, KeyCode.N, KeyCode.O,
             KeyCode.P, KeyCode.Q, KeyCode.R, KeyCode.S, KeyCode.T,
             KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X, KeyCode.Y,
-            KeyCode.Z
+            KeyCode.Z, KeyCode.Space, KeyCode.Tab, KeyCode.Escape,
+            KeyCode.Mouse0
         };
 
         _labels = System.Array.ConvertAll(_keyCodes, k => k.ToString());

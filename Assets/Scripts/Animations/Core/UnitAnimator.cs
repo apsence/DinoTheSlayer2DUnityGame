@@ -126,11 +126,44 @@ public class UnitAnimator : MonoBehaviour
         _animator.SetTrigger("hitTrigger");
     }
 
+    //Feeding
+    public void Feeding()
+    {
+        _animator.SetBool("isFeeding", true);
+    }
+
+    public void StopFeeding()
+    {
+        _animator.SetBool("isFeeding", false);
+    }
+
     public void SetExternalVelocity(Vector2 velocity)
     {
         UpdateMovementAnimation(velocity);
     }
     
+    public void OnStateChanged(AIState from, AIState to)
+    {
+        if (_isDead) return;
+
+        // Сброс предыдущего состояния
+        if (from != null)
+        {
+            switch (from.Name)
+            {
+                case "Attack":  SetAttacking(false); break;
+                case "Feeding": StopFeeding();       break;
+            }
+        }
+
+        // Вход в новое состояние
+        switch (to.Name)
+        {
+            case "Attack":  SetAttacking(true); break;
+            case "Feeding": Feeding();          break;
+        }
+    }
+
     // Public properties
     public bool IsAttacking => _isAttacking;
     public bool IsDead => _isDead;

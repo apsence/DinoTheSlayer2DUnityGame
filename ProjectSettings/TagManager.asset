@@ -30,9 +30,9 @@ TagManager:
   - Water
   - UI
   - Destructibles
-  - 
-  - 
-  - 
+  - MinimapRender
+  - Player
+  - Unit
   - 
   - 
   - 

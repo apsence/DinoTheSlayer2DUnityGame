@@ -6,6 +6,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private PlayerBinds playerBinds;
     private Attacker _attacker;
     private PlayerAnimator _playerAnimator;
     private bool _onCooldawn;
@@ -19,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
         if (!_onCooldawn){
-            if(Input.GetKey(KeyCode.Mouse0)){
+            if(Input.GetKey(playerBinds.attack)){
                 PrepareAttack();
                 _onCooldawn = true;
                 StartCoroutine(WaitForCooldawn());
@@ -40,10 +41,11 @@ public class PlayerAttack : MonoBehaviour
             enemyLayer
         );
 
-        foreach (Collider2D enemy in hits)
+        foreach (Collider2D hit in hits)
         {
-            enemy.GetComponent<Health>()?.TakeDamage(_attacker.Damage, _attacker.MinDamage, _attacker.MaxDamage);
-            Debug.Log(enemy.name + ": " + enemy.GetComponent<Health>().CurrentHealth);
+            if (!hit.CompareTag("Enemy")) continue;
+            
+            hit.GetComponentInChildren<Health>()?.TakeDamage(_attacker.Damage, _attacker.MinDamage, _attacker.MaxDamage);
         }
         _playerAnimator.ChangeState(PlayerState.Idle);
     }

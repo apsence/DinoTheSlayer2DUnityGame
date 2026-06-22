@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
@@ -25,11 +26,13 @@ public class Health : MonoBehaviour, IDamageable
     private bool _isDead;
     private ManageBarVisibility manageBarVisibility;
     private UnitAnimator _unitAnimator;
+    private Transform _root;
 
     public int MaxHealth => maxHealth;
     public bool IsAlive => !_isDead && currentHealth > 0;
     public Transform Transform => transform;
     public int CurrentHealth => currentHealth;
+    public event Action<int, int> OnHealthChanged;
     
     void Start()
     {
@@ -38,6 +41,7 @@ public class Health : MonoBehaviour, IDamageable
         manageBarVisibility = GetComponent<ManageBarVisibility>();
         _unitAnimator = GetComponent<UnitAnimator>();
         _createrOfRewards = GetComponent<CreaterOfRewards>();
+        if(!gameObject.CompareTag("Player")) _root = transform.parent;
 
         if(hpRegen > 0 && hpRegenRate > 0)
         {
@@ -48,39 +52,41 @@ public class Health : MonoBehaviour, IDamageable
     public void TakeDamage(int amount, int _minDamage, int _maxDamage)
     {
         if (_isDead) return;
-        // Случайный разброс урона
-        int finalDamage = amount + Random.Range(_minDamage, _maxDamage + 1);
-        finalDamage = Mathf.Max(1, finalDamage); // Минимум 1 урон
+        int finalDamage = amount + UnityEngine.Random.Range(_minDamage, _maxDamage + 1);
+        finalDamage = Mathf.Max(1, finalDamage);
         
         currentHealth -= finalDamage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
-        if(gameObject.CompareTag("PlayerScripts")) {
+        OnHealthChanged?.Invoke(currentHealth, maxHealth); // ← добавь
+
+        if (gameObject.CompareTag("PlayerScripts"))
             _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);
-        }
-        else if(gameObject.CompareTag("Enemy"))
-        {
+        else if (gameObject.CompareTag("Enemy"))
             manageBarVisibility.ShowBar();
-        }
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-
+        if (currentHealth <= 0) Die();
     }
-    
+
     public void Heal(int amount)
     {
         if (_isDead) return;
-        if(currentHealth == MaxHealth) return;
+        if (currentHealth == MaxHealth) return;
         
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
-        _playerGUI.RefreshPlayerHUDHealthBar(
-        currentHealth,
-        MaxHealth);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth); // ← добавь
+        _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, MaxHealth);
+    }
+
+    public void UpgradeMaxHealth(int amount, int healBonus)
+    {
+        maxHealth += amount;
+        currentHealth = Mathf.Min(currentHealth + healBonus, maxHealth);
+        
+        OnHealthChanged?.Invoke(currentHealth, maxHealth); // ← добавь
+        _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, MaxHealth);
     }
     
     private void Die()
@@ -93,15 +99,15 @@ public class Health : MonoBehaviour, IDamageable
         {
             Destroy(gameObject, delayBeforeDestroyPlayer);
         }
-        else if(gameObject.CompareTag("Enemy"))
+        else if(_root.CompareTag("Enemy"))
         {
-            _createrOfRewards.CreateReward(transform.position);
+            _createrOfRewards.CreateReward(_root.position);
             _unitAnimator.Die();
 
-            gameObject.GetComponent<Rigidbody2D>().simulated = false;
-            gameObject.GetComponent<Collider2D>().enabled = false;
+            _root.GetComponent<Rigidbody2D>().simulated = false;
+            _root.GetComponent<Collider2D>().enabled = false;
 
-            Destroy(gameObject, delayBeforeDestroyAI);
+            Destroy(_root.gameObject, delayBeforeDestroyAI);
         } else if (gameObject.CompareTag("Destructible"))
         {
             gameObject.GetComponent<Animator>().SetTrigger("Destroy");
@@ -122,20 +128,9 @@ public class Health : MonoBehaviour, IDamageable
             }
             else
             {
-                manageBarVisibility.RefreshHealthBar();
+                OnHealthChanged?.Invoke(currentHealth, maxHealth);
             }
         }
 
-    }
-
-    public void UpgradeMaxHealth(int amount, int healBonus)
-    {
-        maxHealth += amount;
-
-        currentHealth = Mathf.Min(currentHealth + healBonus, maxHealth);
-
-        _playerGUI.RefreshPlayerHUDHealthBar(
-        currentHealth,
-        MaxHealth);
     }
 }

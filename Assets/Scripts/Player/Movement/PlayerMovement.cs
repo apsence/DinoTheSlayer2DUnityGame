@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Animator _animator;
+    [SerializeField] private PlayerBinds playerBinds;
     private PlayerAnimator _playerAnimator;
     public float speedBoost;
     public float sprintMultiplier = 2f;
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
+        if(GamePause.IsPaused) return;
         if(_playerAnimator.CurrentState == PlayerState.Attack)
         {
             _rb.linearVelocity = new Vector3(0, 0, 0);
@@ -51,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         _rb.linearVelocity = movement;
 
         // Спринт
-        if (Input.GetKeyDown(KeyCode.Space) && !_isDashing)
+        if (Input.GetKeyDown(playerBinds.dashBind) && !_isDashing)
         {
             StartCoroutine(Dash(sprintDuration, secondsBeforeDashing));
         }

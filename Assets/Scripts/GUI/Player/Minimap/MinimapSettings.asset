@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: MinimapSettings
   m_EditorClassIdentifier: Assembly-CSharp::MinimapSettings
   fadeSpeed: 5
+  sizeList:
+  - 0.9
+  - 1
+  - 1.1

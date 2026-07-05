@@ -31,8 +31,8 @@ public class MusicManager : MonoBehaviour
 
     // Два корутина: один — смена плейлиста (fade out → fade in),
     // другой — основной loop текущего плейлиста.
-    private Coroutine transitionRoutine;
-    private Coroutine playRoutine;
+    private Coroutine _transitionRoutine;
+    private Coroutine _playRoutine;
 
     private void Awake()
     {
@@ -71,20 +71,20 @@ public class MusicManager : MonoBehaviour
         if (playlist == null || playlist.Count == 0) return;
 
         // Останавливаем предыдущую смену плейлиста, если она ещё идёт
-        if (transitionRoutine != null)
-            StopCoroutine(transitionRoutine);
+        if (_transitionRoutine != null)
+            StopCoroutine(_transitionRoutine);
 
-        transitionRoutine = StartCoroutine(TransitionToPlaylist(playlist));
+        _transitionRoutine = StartCoroutine(TransitionToPlaylist(playlist));
     }
 
     // Плавная смена: fade out текущего → переключить → fade in нового
     private IEnumerator TransitionToPlaylist(List<AudioClip> newPlaylist)
     {
         // Останавливаем playLoop, чтобы он не менял volume во время fade out
-        if (playRoutine != null)
+        if (_playRoutine != null)
         {
-            StopCoroutine(playRoutine);
-            playRoutine = null;
+            StopCoroutine(_playRoutine);
+            _playRoutine = null;
         }
 
         // Fade out текущего трека (если что-то играет)
@@ -97,7 +97,7 @@ public class MusicManager : MonoBehaviour
         currentIndex = 0;
 
         // Запускаем loop нового плейлиста
-        playRoutine = StartCoroutine(PlayLoop());
+        _playRoutine = StartCoroutine(PlayLoop());
     }
 
     private IEnumerator PlayLoop()

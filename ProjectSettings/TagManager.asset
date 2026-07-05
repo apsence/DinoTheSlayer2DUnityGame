@@ -22,6 +22,7 @@ TagManager:
   - PlayerCollider
   - PlayerScripts
   - Destructible
+  - HPBarsCanvas
   layers:
   - Default
   - TransparentFX

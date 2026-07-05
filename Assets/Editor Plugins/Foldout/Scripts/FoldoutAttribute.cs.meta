@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: eb0aa97c471994d0eab4e5e6c5595b09
+AssetOrigin:
+  serializedVersion: 1
+  productId: 328212
+  packageName: Foldout Inspector Toolkit
+  packageVersion: 1.0
+  assetPath: Assets/Foldout/Scripts/FoldoutAttribute.cs
+  uploadId: 786688

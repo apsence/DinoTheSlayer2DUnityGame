@@ -23,7 +23,7 @@ public class Upgrades : MonoBehaviour
     private PlayerGUI _playerGUI;
     private Health _health;
     private Attacker _attacker;
-    private UpgradeGUI _upgradeGUI;
+    private UpgradesGUI _upgradeGUI;
 
     private void Awake()
     {
@@ -33,7 +33,7 @@ public class Upgrades : MonoBehaviour
         _playerGUI = player.GetComponentInChildren<PlayerGUI>();
         _health = player.GetComponentInChildren<Health>();
         _attacker = player.GetComponentInChildren<Attacker>();
-        _upgradeGUI = player.GetComponentInChildren<UpgradeGUI>();
+        _upgradeGUI = player.GetComponentInChildren<UpgradesGUI>();
 
     }
 
@@ -46,7 +46,7 @@ public class Upgrades : MonoBehaviour
 
     public void UpgradeHP()
     {
-        if (_upgradeGUI.NeedToShow == false) return;
+        //if (_upgradeGUI.needToShow == false) return;
 
         if (IsHPUpgradeMaxLevel())
             return;
@@ -69,7 +69,7 @@ public class Upgrades : MonoBehaviour
 
     public void UpgradeDamage()
     {
-        if (_upgradeGUI.NeedToShow == false) return;
+        //if (_upgradeGUI.needToShow == false) return;
 
         if (IsDamageUpgradeMaxLevel())
             return;
@@ -100,24 +100,24 @@ public class Upgrades : MonoBehaviour
     {
         if (IsHPUpgradeMaxLevel())
         {
-            _playerGUI.HideHPUpgrade();
+            //_playerGUI.HideHPUpgrade();
             return;
         }
 
         currentCostOfHPUpgrade = costOfUpgradeHP[currentHPLevel];
-        _playerGUI.RefreshHPUpgradeCost(currentCostOfHPUpgrade);
+        //_playerGUI.RefreshHPUpgradeCost(currentCostOfHPUpgrade);
     }
 
     private void RefreshDamageUpgradeUI()
     {
         if (IsDamageUpgradeMaxLevel())
         {
-            _playerGUI.HideDamageUpgrade();
+            //_playerGUI.HideDamageUpgrade();
             return;
         }
 
         currentCostOfDamageUpgrade = costOfUpgradeDamage[currentDamageLevel];
-        _playerGUI.RefreshDamageUpgradeCost(currentCostOfDamageUpgrade);
+        //_playerGUI.RefreshDamageUpgradeCost(currentCostOfDamageUpgrade);
     }
 
     // ---------------- CHECKS ----------------

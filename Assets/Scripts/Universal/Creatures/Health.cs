@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour, IDamageable
+public class Health : MonoBehaviour
 {
     [Header("Здоровье")]
     [SerializeField] private int maxHealth = 100;
@@ -18,10 +18,9 @@ public class Health : MonoBehaviour, IDamageable
 
     [Header("---НЕ ИГРОК---")]
     [SerializeField] private float delayBeforeDestroyAI;
-    [Header("Ссылки")]
-    
     
     private CreaterOfRewards _createrOfRewards;
+    private SpriteHitFlash _spriteHitFlash;
 
     private bool _isDead;
     private ManageBarVisibility manageBarVisibility;
@@ -41,6 +40,7 @@ public class Health : MonoBehaviour, IDamageable
         manageBarVisibility = GetComponent<ManageBarVisibility>();
         _unitAnimator = GetComponent<UnitAnimator>();
         _createrOfRewards = GetComponent<CreaterOfRewards>();
+        _spriteHitFlash = GetComponent<SpriteHitFlash>();
         if(!gameObject.CompareTag("Player")) _root = transform.parent;
 
         if(hpRegen > 0 && hpRegenRate > 0)
@@ -52,13 +52,14 @@ public class Health : MonoBehaviour, IDamageable
     public void TakeDamage(int amount, int _minDamage, int _maxDamage)
     {
         if (_isDead) return;
+        _spriteHitFlash.PlayFlash();
         int finalDamage = amount + UnityEngine.Random.Range(_minDamage, _maxDamage + 1);
         finalDamage = Mathf.Max(1, finalDamage);
         
         currentHealth -= finalDamage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         
-        OnHealthChanged?.Invoke(currentHealth, maxHealth); // ← добавь
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (gameObject.CompareTag("PlayerScripts"))
             _playerGUI.RefreshPlayerHUDHealthBar(currentHealth, maxHealth);

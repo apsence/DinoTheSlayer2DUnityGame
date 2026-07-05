@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 2098696800069709051}
   - component: {fileID: 5865430103539456826}
   - component: {fileID: 6670764440255014074}
+  - component: {fileID: 6828254453081796882}
   m_Layer: 9
   m_Name: Scripts
   m_TagString: Untagged
@@ -395,6 +396,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HPBarFollower
   _hpBarPrefab: {fileID: 2980044108263681890, guid: 54f2da806a06cc644bafa03db1ccee88, type: 3}
   _offset: {x: -0.1, y: 1, z: 0}
+--- !u!114 &6828254453081796882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5747723179539434246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e23a5e3dc77b0474681886ea0e37896f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteHitFlash
+  spriteRenderer: {fileID: 6283007684624606243}
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  pulseDuration: 0.25
+  pulseStrength: 1
 --- !u!1 &6802716094649320577
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +471,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: b3e4bfdd0a4a37847ab6af2793b2e0d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

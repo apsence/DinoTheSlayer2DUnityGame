@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -19,7 +20,14 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if (!_onCooldawn){
+        if (!_onCooldawn && !GamePause.IsPaused){
+            
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            {
+                return; // Выходим из Update, не проверяя нажатие клавиш
+            }
+            
+            
             if(Input.GetKey(playerBinds.attack)){
                 PrepareAttack();
                 _onCooldawn = true;

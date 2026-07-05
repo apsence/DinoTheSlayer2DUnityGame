@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 560a98fd946df4447ad1e81de4b05739
+AssetOrigin:
+  serializedVersion: 1
+  productId: 328212
+  packageName: Foldout Inspector Toolkit
+  packageVersion: 1.0
+  assetPath: Assets/Foldout/Editor/FoldoutGroupingEditor.cs
+  uploadId: 786688

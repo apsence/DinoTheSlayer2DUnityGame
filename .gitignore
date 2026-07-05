@@ -4,10 +4,13 @@ Temp/
 Library/
 UserSettings/
 .vscode/
+.idea/
+obj
 
 
 *.csproj
 *.slnx
+*.sln
 
 
 

@@ -24,6 +24,8 @@ public class UpgradesGUIVisibility : MonoBehaviour
     private bool _isMenuAnimating;
     private Coroutine _menuCoroutine;
     private Coroutine _hotkeyCoroutine;
+    
+    private bool _wasHotkeyVisible;
 
     private bool _wasNearMerchant;
     public bool IsNearMerchant { get; private set; }
@@ -53,13 +55,15 @@ public class UpgradesGUIVisibility : MonoBehaviour
 
     private void Update()
     {
-        bool currentNear = CheckDistance();
-        IsNearMerchant = currentNear;
-        
-        if (currentNear != _wasNearMerchant)
+        IsNearMerchant = CheckDistance();
+
+        bool shouldShowHotkey = CanShowHotkey();
+
+        if (shouldShowHotkey != _wasHotkeyVisible)
         {
-            _wasNearMerchant = currentNear;
-            if (currentNear)
+            _wasHotkeyVisible = shouldShowHotkey;
+
+            if (shouldShowHotkey)
                 FadeHotkeyHintIn();
             else
                 FadeHotkeyHintOut();
@@ -77,9 +81,19 @@ public class UpgradesGUIVisibility : MonoBehaviour
         return false;
     }
     
+    private bool CanShowHotkey()
+    {
+        return IsNearMerchant &&
+               (!GlobalOpenedGUI.Instance.IsAnyGuiOpen ||
+                GlobalOpenedGUI.Instance.CurrentGui == this);
+    }
+    
 
     public void Show()
     {
+        if (!GlobalOpenedGUI.Instance.TryOpen(this))
+            return;
+        
         if (_isOpen || _isMenuAnimating) return;
         if (_menuCoroutine != null) StopCoroutine(_menuCoroutine);
         _menuCoroutine = StartCoroutine(FadeMenu(0f, 1f, menuFadeDuration, true));
@@ -90,6 +104,7 @@ public class UpgradesGUIVisibility : MonoBehaviour
         if (!_isOpen || _isMenuAnimating) return;
         if (_menuCoroutine != null) StopCoroutine(_menuCoroutine);
         _menuCoroutine = StartCoroutine(FadeMenu(1f, 0f, menuFadeDuration, false));
+        GlobalOpenedGUI.Instance.Close(this);
     }
 
     private IEnumerator FadeMenu(float from, float to, float duration, bool open)

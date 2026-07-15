@@ -16,4 +16,9 @@ public class EnemyAttackState : AIState
         _agent.isStopped = true;
         _agent.ResetPath();
     }
+    
+    public override void Exit()
+    {
+        _agent.isStopped = false; 
+    }
 }

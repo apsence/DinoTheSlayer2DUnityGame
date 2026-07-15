@@ -9,4 +9,5 @@ public class PlayerBinds : ScriptableObject
     [KeyCodeAlpha] public KeyCode hideAllGUI = KeyCode.Escape;
     [KeyCodeAlpha] public KeyCode showUpgradesMenu = KeyCode.Q;
     [KeyCodeAlpha] public KeyCode resetCameraZoom = KeyCode.X;
+    [KeyCodeAlpha] public KeyCode showMenu = KeyCode.Escape;
 }

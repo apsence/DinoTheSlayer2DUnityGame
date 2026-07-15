@@ -16,3 +16,6 @@ MonoBehaviour:
   openInventory: 9
   attack: 323
   hideAllGUI: 27
+  showUpgradesMenu: 113
+  resetCameraZoom: 120
+  showMenu: 102
